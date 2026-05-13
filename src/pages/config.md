@@ -1,5 +1,5 @@
 - pathPrefix:
-    - /dev-docs-template/
+    - /genstudio-experience-api/
 
 - pages:
     - [Analytics](index.md)
