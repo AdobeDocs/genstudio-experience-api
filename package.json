@@ -13,6 +13,9 @@
   "engines": {
     "node": "^24.11.0"
   },
+  "devDependencies": {
+    "@redocly/cli": "^1.34.0"
+  },
   "scripts": {
     "dev": "npx --yes --prefer-online github:AdobeDocs/adp-devsite-utils dev",
     "buildNavigation": "npx --yes --prefer-online github:AdobeDocs/adp-devsite-utils buildNavigation -v",
@@ -23,6 +26,8 @@
     "buildSiteMetadata": "npx --yes --prefer-online github:AdobeDocs/adp-devsite-utils buildSiteMetadata -v",
     "buildContributors": "npx --yes --prefer-online github:AdobeDocs/adp-devsite-utils buildContributorsV2 -v",
     "lint": "npx --yes --prefer-online github:AdobeDocs/adp-devsite-utils runLint -v",
+    "lint:openapi": "redocly lint",
+    "lint:openapi:all": "redocly lint \"static/**/*.json\"",
     "lint:errorOnly": "npx --yes --prefer-online github:AdobeDocs/adp-devsite-utils runLint",
     "link:externalLinkOnly": "npx --yes --prefer-online github:AdobeDocs/adp-devsite-utils runLint --external-links-only -v",
     "link:checkAllLinks": "npx --yes --prefer-online github:AdobeDocs/adp-devsite-utils runLint --internal-links-only --external-links-only -v",
