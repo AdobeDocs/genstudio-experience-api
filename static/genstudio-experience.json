@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "GenStudio Experience API",
-    "description": "This service is a storage-agnostic public API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences. All endpoints return the same shape, regardless of the underlying storage provider. See usage notes for the [list of supported storage providers](https://developer.adobe.com/genstudio-experience-api/getting-started/usage-notes/index.md).",
+    "description": "This service is a storage-agnostic public API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences. \n\n**Storage-agnostic**: All endpoints return the same shape, regardless of the underlying storage provider. See usage notes for the [list of supported storage providers](https://developer.adobe.com/genstudio-experience-api/getting-started/usage-notes/index.md).",
     "version": "20251029T000000Z"
   },
   "servers": [
@@ -24,7 +24,7 @@
       "get": {
         "operationId": "getExperience",
         "summary": "Get Experience",
-        "description": "Retrieves a single experience by ID, including all fields, variants, and asset URLs.\n\nSupports conditional requests via the `If-None-Match` header. If the provided ETag matches, returns `304 Not Modified` with no body.\n\n**Storage-agnostic**: This endpoint returns the same shape regardless of the underlying storage provider.",
+        "description": "Retrieves a single experience by ID, including all fields, variants, and asset URLs.\n\nSupports conditional requests via the `If-None-Match` header. If the provided ETag matches, returns `304 Not Modified` with no body.",
         "parameters": [
           {
             "schema": {
