@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "GenStudio Experience API",
-    "description": " This service is a storage-agnostic public API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences. All endpoints return the same shape, regardless of the underlying storage provider. See usage notes for the [list of supported storage providers](https://developer.adobe.com/genstudio-experience-api/getting-started/usage-notes/index.md).",
+    "description": "This service is a storage-agnostic public API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences. All endpoints return the same shape, regardless of the underlying storage provider. See usage notes for the [list of supported storage providers](https://developer.adobe.com/genstudio-experience-api/getting-started/usage-notes/index.md).",
     "version": "20251029T000000Z",
     "license": {
       "name": "Adobe Creative API License",
@@ -12,7 +12,7 @@
   "servers": [
     {
       "url": "https://genstudio.adobe.io",
-      "description": "Production environment"
+      "description": "Production environment."
     }
   ],
   "security": [
@@ -39,7 +39,7 @@
             "in": "path",
             "name": "experienceId",
             "required": true,
-            "description": "AEM experience URN"
+            "description": "Adobe Experience Manager (AEM) experience URN."
           },
           {
             "schema": {
@@ -49,7 +49,7 @@
             "in": "header",
             "name": "authorization",
             "required": true,
-            "description": "Bearer token from Adobe OAuth Server-to-Server credentials"
+            "description": "Bearer token from Adobe OAuth Server-to-Server credentials."
           },
           {
             "schema": {
@@ -59,7 +59,7 @@
             "in": "header",
             "name": "x-api-key",
             "required": true,
-            "description": "Client ID from the Adobe Developer Console project"
+            "description": "Client ID from the Adobe Developer Console project."
           },
           {
             "schema": {
@@ -79,7 +79,7 @@
             "in": "header",
             "name": "x-request-id",
             "required": false,
-            "description": "Client-generated UUID for request tracing"
+            "description": "Client-generated UUID for request tracing."
           },
           {
             "schema": {
@@ -89,7 +89,7 @@
             "in": "header",
             "name": "x-correlation-id",
             "required": false,
-            "description": "Correlation ID to group related requests"
+            "description": "Correlation ID to group related requests."
           }
         ],
         "responses": {
@@ -454,7 +454,7 @@
       "get": {
         "operationId": "listExperiences",
         "summary": "List Experiences",
-        "description": "Returns a paginated list of experience summaries filtered by query parameters.\n\nSupports cursor-based pagination via the `cursor` parameter. Use the `cursor` value from the previous response to retrieve the next page.\n\nSupports conditional requests via the `If-None-Match` header. If the provided ETag matches, returns `304 Not Modified` with no body.\n\n**Filters** (OR semantics within each): `brand`, `campaign`, `channel`, `createdAtFrom`, `createdAtTo`.\n\n**Storage-agnostic**: This endpoint returns the same shape regardless of the underlying storage provider.",
+        "description": "Returns a paginated list of Experience summaries filtered by query parameters.\n\nSupports Cursor-based pagination via the `cursor` parameter. Use the `cursor` value from the previous response to retrieve the next page.\n\nSupports conditional requests via the `If-None-Match` header. If the provided ETag matches, returns `304 Not Modified` with no body.\n\n**Filters** (OR semantics within each): `brand`, `campaign`, `channel`, `createdAtFrom`, `createdAtTo`.",
         "parameters": [
           {
             "schema": {
@@ -474,7 +474,7 @@
             "in": "query",
             "name": "brand",
             "required": false,
-            "description": "Filter by brand name. Repeat the parameter for OR semantics (e.g. brand=Acme&brand=Pinnacle)."
+            "description": "Filter by brand name. Repeat the parameter for OR semantics (e.g., brand=Acme&brand=Pinnacle)."
           },
           {
             "schema": {
@@ -649,7 +649,7 @@
             "in": "header",
             "name": "authorization",
             "required": true,
-            "description": "Bearer token from Adobe OAuth Server-to-Server credentials"
+            "description": "Bearer token from Adobe OAuth Server-to-Server credentials."
           },
           {
             "schema": {
@@ -659,7 +659,7 @@
             "in": "header",
             "name": "x-api-key",
             "required": true,
-            "description": "Client ID from the Adobe Developer Console project"
+            "description": "Client ID from the Adobe Developer Console project."
           },
           {
             "schema": {
@@ -679,7 +679,7 @@
             "in": "header",
             "name": "x-request-id",
             "required": false,
-            "description": "Client-generated UUID for request tracing"
+            "description": "Client-generated UUID for request tracing."
           },
           {
             "schema": {
@@ -689,7 +689,7 @@
             "in": "header",
             "name": "x-correlation-id",
             "required": false,
-            "description": "Correlation ID to group related requests"
+            "description": "Correlation ID to group related requests."
           }
         ],
         "responses": {
@@ -905,7 +905,7 @@
       "get": {
         "operationId": "getExperienceAssetDelivery",
         "summary": "Get Experience Asset Delivery URL",
-        "description": "Returns a 302 redirect to a short-lived pre-signed URL for the requested asset.\n\nThe client's HTTP library follows the redirect automatically. Each call issues a fresh redirect with a new token.\n\nPass `?forceOriginal=true` to retrieve the original binary rendition instead of web-optimised.\n\nThe `assetId` path parameter accepts either a `urn:aaid:aem:…` asset URN or a `Variant_…`-prefixed rendition name (e.g. `Variant_meta_1x1.chromeless.gsthumbnail.mp4`).\n\n**Response headers**: `Location` (signed URL), `X-Asset-Mime-Type`, `Cache-Control: no-store`.\n\n**Storage-agnostic**: This endpoint returns the same shape regardless of the underlying storage provider.",
+        "description": "Returns a 302 redirect to a short-lived pre-signed URL for the requested asset.\n\nThe client's HTTP library follows the redirect automatically. Each call issues a fresh redirect with a new token.\n\nPass `?forceOriginal=true` to retrieve the original binary rendition instead of web-optimized.\n\nThe `assetId` path parameter accepts either a `urn:aaid:aem:…` asset URN or a `Variant_…`-prefixed rendition name (e.g., `Variant_meta_1x1.chromeless.gsthumbnail.mp4`).\n\n**Response headers**: `Location` (signed URL), `X-Asset-Mime-Type`, `Cache-Control: no-store`.",
         "parameters": [
           {
             "schema": {
@@ -925,7 +925,8 @@
             },
             "in": "query",
             "name": "forceOriginal",
-            "required": false
+            "required": false,
+            "description": "When `true`, return the original binary rendition instead of the web-optimized rendition."
           },
           {
             "schema": {
@@ -936,7 +937,7 @@
             "in": "path",
             "name": "experienceId",
             "required": true,
-            "description": "AEM experience URN"
+            "description": "Adobe Experience Manager (AEM) experience URN."
           },
           {
             "schema": {
@@ -947,7 +948,7 @@
             "in": "path",
             "name": "assetId",
             "required": true,
-            "description": "AEM asset URN"
+            "description": "Adobe Experience Manager (AEM) asset URN."
           },
           {
             "schema": {
@@ -957,7 +958,7 @@
             "in": "header",
             "name": "authorization",
             "required": true,
-            "description": "Bearer token from Adobe OAuth Server-to-Server credentials"
+            "description": "Bearer token from Adobe OAuth Server-to-Server credentials."
           },
           {
             "schema": {
@@ -967,7 +968,7 @@
             "in": "header",
             "name": "x-api-key",
             "required": true,
-            "description": "Client ID from the Adobe Developer Console project"
+            "description": "Client ID from the Adobe Developer Console project."
           },
           {
             "schema": {
@@ -987,7 +988,7 @@
             "in": "header",
             "name": "x-request-id",
             "required": false,
-            "description": "Client-generated UUID for request tracing"
+            "description": "Client-generated UUID for request tracing."
           },
           {
             "schema": {
@@ -997,7 +998,7 @@
             "in": "header",
             "name": "x-correlation-id",
             "required": false,
-            "description": "Correlation ID to group related requests"
+            "description": "Correlation ID to group related requests."
           }
         ],
         "responses": {
@@ -1012,12 +1013,12 @@
                   "type": "string",
                   "format": "uri"
                 },
-                "description": "Pre-signed URL for the asset"
+                "description": "Pre-signed URL for the asset."
               }
             }
           },
           "401": {
-            "description": "Unauthorized. Indicates that the request has not been applied because it lacks valid authentication credentials for the target resource.",
+            "description": "Unauthorized. The request has not been applied because it lacks valid authentication credentials for the target resource.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1118,7 +1119,7 @@
             "in": "path",
             "name": "experienceId",
             "required": true,
-            "description": "AEM experience URN"
+            "description": "Adobe Experience Manager (AEM) experience URN."
           },
           {
             "schema": {
@@ -1128,7 +1129,7 @@
             "in": "header",
             "name": "authorization",
             "required": true,
-            "description": "Bearer token from Adobe OAuth Server-to-Server credentials"
+            "description": "Bearer token from Adobe OAuth Server-to-Server credentials."
           },
           {
             "schema": {
@@ -1138,7 +1139,7 @@
             "in": "header",
             "name": "x-api-key",
             "required": true,
-            "description": "Client ID from the Adobe Developer Console project"
+            "description": "Client ID from the Adobe Developer Console project."
           },
           {
             "schema": {
@@ -1158,7 +1159,7 @@
             "in": "header",
             "name": "x-request-id",
             "required": false,
-            "description": "Client-generated UUID for request tracing"
+            "description": "Client-generated UUID for request tracking."
           },
           {
             "schema": {
@@ -1168,7 +1169,7 @@
             "in": "header",
             "name": "x-correlation-id",
             "required": false,
-            "description": "Correlation ID to group related requests"
+            "description": "Correlation ID to group related requests."
           }
         ],
         "responses": {
@@ -1191,7 +1192,7 @@
                   "type": "string",
                   "format": "uri"
                 },
-                "description": "Pre-signed URL for the HTML template"
+                "description": "Pre-signed URL for the HTML template."
               }
             }
           },
