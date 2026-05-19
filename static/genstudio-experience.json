@@ -11,7 +11,8 @@
   },
   "servers": [
     {
-      "url": "https://genstudio.adobe.io"
+      "url": "https://genstudio.adobe.io",
+      "description": "Production environment"
     }
   ],
   "security": [
@@ -22,20 +23,11 @@
       "ApiKey": []
     }
   ],
-  "tags": [
-    {
-      "name": "Public API",
-      "description": "Storage-agnostic public API for external consumers (S2S auth).\n\n**Endpoints:**\n- GET /experiences/{id} — fetch a single full experience\n- GET /experiences — filtered + paginated list of experience summaries\n- GET /experiences/{id}/assets/{assetId} — 302 redirect to pre-signed asset delivery URL\n\nThese endpoints return the same shape regardless of the underlying storage provider (S3, AEM, or future)."
-    }
-  ],
   "paths": {
     "/experiences/{experienceId}": {
       "get": {
         "operationId": "getExperience",
         "summary": "Get Experience",
-        "tags": [
-          "Public API"
-        ],
         "description": "Retrieves a single experience by ID, including all fields, variants, and asset URLs.\n\nSupports conditional requests via the `If-None-Match` header. If the provided ETag matches, returns `304 Not Modified` with no body.\n\n**Storage-agnostic**: This endpoint returns the same shape regardless of the underlying storage provider.",
         "parameters": [
           {
@@ -462,9 +454,6 @@
       "get": {
         "operationId": "listExperiences",
         "summary": "List Experiences",
-        "tags": [
-          "Public API"
-        ],
         "description": "Returns a paginated list of experience summaries filtered by query parameters.\n\nSupports cursor-based pagination via the `cursor` parameter. Use the `cursor` value from the previous response to retrieve the next page.\n\nSupports conditional requests via the `If-None-Match` header. If the provided ETag matches, returns `304 Not Modified` with no body.\n\n**Filters** (OR semantics within each): `brand`, `campaign`, `channel`, `createdAtFrom`, `createdAtTo`.\n\n**Storage-agnostic**: This endpoint returns the same shape regardless of the underlying storage provider.",
         "parameters": [
           {
@@ -916,9 +905,6 @@
       "get": {
         "operationId": "getExperienceAssetDelivery",
         "summary": "Get Experience Asset Delivery URL",
-        "tags": [
-          "Public API"
-        ],
         "description": "Returns a 302 redirect to a short-lived pre-signed URL for the requested asset.\n\nThe client's HTTP library follows the redirect automatically. Each call issues a fresh redirect with a new token.\n\nPass `?forceOriginal=true` to retrieve the original binary rendition instead of web-optimised.\n\nThe `assetId` path parameter accepts either a `urn:aaid:aem:…` asset URN or a `Variant_…`-prefixed rendition name (e.g. `Variant_meta_1x1.chromeless.gsthumbnail.mp4`).\n\n**Response headers**: `Location` (signed URL), `X-Asset-Mime-Type`, `Cache-Control: no-store`.\n\n**Storage-agnostic**: This endpoint returns the same shape regardless of the underlying storage provider.",
         "parameters": [
           {
@@ -1121,9 +1107,6 @@
       "get": {
         "operationId": "getExperienceTemplate",
         "summary": "Get Experience Template",
-        "tags": [
-          "Public API"
-        ],
         "description": "Returns the frozen HTML template captured at experience creation time.\n\nDepending on the storage provider, this endpoint returns either:\n- **302 redirect** — follow `Location` to fetch the HTML from a short-lived pre-signed URL\n- **200 with body** — the HTML is returned directly as `text/html`\n\nClients must handle both response codes.\n\n**404 responses** distinguish two cases via the Problem Details `type` field:\n- `.../errors/not-found` — the experience itself does not exist\n- `.../errors/template-not-available` — the experience exists but has no Handlebars template (e.g. Express experiences)",
         "parameters": [
           {
