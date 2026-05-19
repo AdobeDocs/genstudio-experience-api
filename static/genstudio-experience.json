@@ -1159,7 +1159,7 @@
             "in": "header",
             "name": "x-request-id",
             "required": false,
-            "description": "Client-generated UUID for request tracking."
+            "description": "Client-generated UUID for request tracing."
           },
           {
             "schema": {
