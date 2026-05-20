@@ -1,6 +1,6 @@
 ---
-title: {} API or feature Authentication
-description: Learn how to set up and authenticate a project to use {} API or feature API.
+title: GenStudio Experience API Authentication
+description: Learn how to set up and authenticate a project to use GenStudio Experience API.
 hideBreadcrumbNav: true
 keywords:
 - authentication
@@ -11,11 +11,11 @@ keywords:
 ---
 # Authentication
 
-Learn how to authenticate requests to {} API or feature API.
+Learn how to authenticate requests to GenStudio Experience API.
 
 ## Overview
 
-Every request made to {} API or feature API must include an encrypted access token.
+Every request made to GenStudio Experience API must include an encrypted access token.
 
 Your secure, server-side application retrieves an access token by making a request to the [Adobe Identity Management System (IMS)][1] with your **Client ID** and **Client Secret**.
 
@@ -24,7 +24,7 @@ Your secure, server-side application retrieves an access token by making a reque
 This tutorial assumes you have worked with your Adobe representative and have the following:
 
 - An [Adobe Developer Console][2] account.
-- A [project][3] with {} API or feature API [OAuth Server-to-Server credentials set up][4].
+- A [project][3] with GenStudio Experience API [OAuth Server-to-Server credentials set up][4].
 - Access to your **Client ID** and **Client Secret** from the [Adobe Developer Console project][5]. Securely store these credentials and never expose them in client-side or public code.
 
 ## Retrieve an access token
@@ -34,8 +34,8 @@ A temporary access token validates calls to the API. You can [generate an access
 1. Open a secure terminal and export your **Client ID** and **Client Secret** as environment variables so that later commands can access them:
 
   ```bash
-  export {API or feature}_FF_SERVICES_CLIENT_ID=<Your_Client_ID>
-  export {API or feature}_FF_SERVICES_CLIENT_SECRET=<Your_Client_Secret>
+  export EXP_GS_SERVICES_CLIENT_ID=<Your_Client_ID>
+  export EXP_GS_SERVICES_CLIENT_SECRET=<Your_Client_Secret>
   ```
 
 2. Run the following command to generate an access token:
@@ -44,9 +44,9 @@ A temporary access token validates calls to the API. You can [generate an access
   curl --location 'https://ims-na1.adobelogin.com/ims/token/v3' \
   --header 'Content-Type: application/x-www-form-urlencoded' \
   --data-urlencode 'grant_type=client_credentials' \
-  --data-urlencode "client_id={API or feature}_FF_SERVICES_CLIENT_ID" \
-  --data-urlencode "client_secret={API or feature}_FF_SERVICES_CLIENT_SECRET" \
-  --data-urlencode 'scope={relevant_scopes}'
+  --data-urlencode "client_id=EXP_GS_SERVICES_CLIENT_ID" \
+  --data-urlencode "client_secret=EXP_GS_SERVICES_CLIENT_SECRET" \
+  --data-urlencode 'scope=openid,AdobeID,additional_info.projectedProductContext,read_organizations'
   ```
 
   The response will look like this:
@@ -64,7 +64,7 @@ A temporary access token validates calls to the API. You can [generate an access
 3. Export your access token as an environment variable:
 
   ```bash
-  export {API or feature}_FF_SERVICES_ACCESS_TOKEN=<Your_Access_Token>
+  export EXP_GS_SERVICES_ACCESS_TOKEN=<Your_Access_Token>
   ```
 
 ## Make your first API call
