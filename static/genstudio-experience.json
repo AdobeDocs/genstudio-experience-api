@@ -1,0 +1,1432 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "GenStudio Experience API",
+    "description": "This service is a storage-agnostic public API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences. \n\n**Storage-agnostic**: All endpoints return the same shape, regardless of the underlying storage provider. See usage notes for the [list of supported storage providers](https://developer.adobe.com/genstudio-experience-api/getting-started/usage-notes/index.md).",
+    "version": "20251029T000000Z"
+  },
+  "servers": [
+    {
+      "url": "https://genstudio.adobe.io",
+      "description": "Production environment."
+    }
+  ],
+  "security": [
+    {
+      "OAuth2": []
+    },
+    {
+      "ApiKey": []
+    }
+  ],
+  "paths": {
+    "/experiences/{experienceId}": {
+      "get": {
+        "operationId": "getExperience",
+        "summary": "Get Experience",
+        "description": "Retrieves a single experience by ID, including all fields, variants, and asset URLs.\n\nSupports conditional requests via the `If-None-Match` header. If the provided ETag matches, returns `304 Not Modified` with no body.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "example": "urn:aaid:aem:e577c7e1-c119-4892-9b97-59a9ab1927f6"
+            },
+            "in": "path",
+            "name": "experienceId",
+            "required": true,
+            "description": "Adobe Experience Manager (AEM) experience URN."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJhbGciOiJSUz..."
+            },
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "description": "Bearer token from Adobe OAuth Server-to-Server credentials."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "37e7532f1c5a225acf8d2fad131cde8d"
+            },
+            "in": "header",
+            "name": "x-api-key",
+            "required": true,
+            "description": "Client ID from the Adobe Developer Console project."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "36031A56669DEACD0A49402F@AdobeOrg"
+            },
+            "in": "header",
+            "name": "x-ims-org-id",
+            "required": true,
+            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console: open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "in": "header",
+            "name": "x-request-id",
+            "required": false,
+            "description": "Client-generated UUID for request tracing."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "corr-abc-123"
+            },
+            "in": "header",
+            "name": "x-correlation-id",
+            "required": false,
+            "description": "Correlation ID to group related requests."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The full experience object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "experienceId": {
+                      "type": "string"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "modifiedAt": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "channel": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/components/schemas/Channel"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "externalTemplateSource": {
+                      "type": "string"
+                    },
+                    "externalTemplateId": {
+                      "type": "string"
+                    },
+                    "externalTemplateMetadata": {
+                      "type": "object",
+                      "additionalProperties": {}
+                    },
+                    "externalAssetMetadata": {
+                      "type": "object",
+                      "additionalProperties": {}
+                    },
+                    "keywords": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "prompt": {
+                      "type": "string"
+                    },
+                    "brands": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "personas": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "products": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "language": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "variants": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "variantKey": {
+                            "type": "string"
+                          },
+                          "aspectRatio": {
+                            "type": "string"
+                          },
+                          "channel": {
+                            "anyOf": [
+                              {
+                                "$ref": "#/components/schemas/Channel"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "isMain": {
+                            "type": "boolean"
+                          },
+                          "asset": {
+                            "type": "object",
+                            "properties": {
+                              "assetId": {
+                                "type": "string"
+                              },
+                              "url": {
+                                "type": "string",
+                                "format": "uri"
+                              },
+                              "mimeType": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "url"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "fields": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "$ref": "#/components/schemas/FieldValue"
+                            }
+                          },
+                          "pods": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "fields": {
+                                  "type": "object",
+                                  "additionalProperties": {
+                                    "$ref": "#/components/schemas/FieldValue"
+                                  }
+                                },
+                                "assets": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "fieldReference": {
+                                        "type": "string"
+                                      },
+                                      "assetId": {
+                                        "type": "string"
+                                      },
+                                      "url": {
+                                        "type": "string",
+                                        "format": "uri"
+                                      },
+                                      "mimeType": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "fieldReference"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "fields"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "assets": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "fieldReference": {
+                                  "type": "string"
+                                },
+                                "assetId": {
+                                  "type": "string"
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "format": "uri"
+                                },
+                                "mimeType": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "fieldReference"
+                              ],
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "required": [
+                          "variantKey",
+                          "channel",
+                          "isMain",
+                          "fields"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "experienceId",
+                    "createdAt",
+                    "modifiedAt",
+                    "title",
+                    "channel",
+                    "keywords",
+                    "prompt",
+                    "brands",
+                    "personas",
+                    "products",
+                    "language",
+                    "variants"
+                  ],
+                  "additionalProperties": false,
+                  "description": "The full experience object"
+                },
+                "example": {
+                  "experienceId": "urn:aaid:aem:e577c7e1-c119-4892-9b97-59a9ab1927f6",
+                  "createdAt": "2026-02-16T16:30:00.000Z",
+                  "modifiedAt": "2026-02-16T16:30:00.000Z",
+                  "title": "Summer Campaign - LinkedIn",
+                  "channel": "linkedin",
+                  "keywords": [
+                    "image",
+                    "text"
+                  ],
+                  "prompt": "Create LinkedIn ads with a catchy headline, benefit-focused copy, and a clear call to action.",
+                  "brands": [
+                    "Acme"
+                  ],
+                  "personas": [
+                    "Active Lifestyle Enthusiast"
+                  ],
+                  "products": [
+                    "Trail Runner Pro"
+                  ],
+                  "language": [
+                    "en_US"
+                  ],
+                  "variants": [
+                    {
+                      "variantKey": "Variant_linkedin_4x5_0",
+                      "aspectRatio": "4:5",
+                      "channel": "linkedin",
+                      "isMain": true,
+                      "asset": {
+                        "assetId": "Variant_linkedin_4x5_0.chromeless.gsthumbnail.mp4",
+                        "url": "https://genstudio.adobe.io/experiences/urn:aaid:aem:e577c7e1-c119-4892-9b97-59a9ab1927f6/assets/Variant_linkedin_4x5_0.chromeless.gsthumbnail.mp4",
+                        "mimeType": "video/mp4"
+                      },
+                      "fields": {
+                        "headline": {
+                          "value": "Bold colors, clean lines — designed for everyday momentum."
+                        },
+                        "cta_text": {
+                          "value": "Shop Now"
+                        }
+                      },
+                      "pods": [
+                        {
+                          "name": "pod1",
+                          "fields": {
+                            "headline": {
+                              "value": "Pod 1 Title"
+                            },
+                            "body": {
+                              "value": "Pod 1 Body copy here"
+                            }
+                          },
+                          "assets": [
+                            {
+                              "fieldReference": "pod1_image",
+                              "assetId": "urn:aaid:aem:62d4408b-13cb-4d41-8c6f-127fb2cad067",
+                              "url": "https://genstudio.adobe.io/experiences/urn:aaid:aem:e577c7e1-c119-4892-9b97-59a9ab1927f6/assets/urn:aaid:aem:62d4408b-13cb-4d41-8c6f-127fb2cad067"
+                            }
+                          ]
+                        }
+                      ],
+                      "assets": []
+                    },
+                    {
+                      "variantKey": "Variant_linkedin_1x1_1",
+                      "aspectRatio": "1:1",
+                      "channel": "linkedin",
+                      "isMain": false,
+                      "fields": {
+                        "headline": {
+                          "value": "Summer deals — don't miss out"
+                        },
+                        "cta_text": {
+                          "value": "Learn More"
+                        }
+                      },
+                      "assets": []
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Not Modified"
+          },
+          "401": {
+            "description": "Unauthorized. Indicates that the request has not been applied because it lacks valid authentication credentials for the target resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. Indicates that the server understood the request but refuses to fulfil it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found. Indicates that the origin server did not find a current representation for the target resource or is not willing to disclose that one exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable. Indicates that the target resource does not have a current representation that would be acceptable to the user agent, according to the proactive negotiation header fields received in the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAcceptable"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/experiences": {
+      "get": {
+        "operationId": "listExperiences",
+        "summary": "List Experiences",
+        "description": "Returns a paginated list of Experience summaries filtered by query parameters.\n\nSupports Cursor-based pagination via the `cursor` parameter. Use the `cursor` value from the previous response to retrieve the next page.\n\nSupports conditional requests via the `If-None-Match` header. If the provided ETag matches, returns `304 Not Modified` with no body.\n\n**Filters** (OR semantics within each): `brand`, `campaign`, `channel`, `createdAtFrom`, `createdAtTo`.",
+        "parameters": [
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ],
+              "example": "Acme"
+            },
+            "in": "query",
+            "name": "brand",
+            "required": false,
+            "description": "Filter by brand name. Repeat the parameter for OR semantics (e.g., brand=Acme&brand=Pinnacle)."
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ],
+              "example": "Summer 2026"
+            },
+            "in": "query",
+            "name": "campaign",
+            "required": false,
+            "description": "Filter by campaign name."
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ],
+              "example": "Trail Runner Pro"
+            },
+            "in": "query",
+            "name": "product",
+            "required": false,
+            "description": "Filter by product name. Repeat the parameter for OR semantics."
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ],
+              "example": "Active Lifestyle Enthusiast"
+            },
+            "in": "query",
+            "name": "audience",
+            "required": false,
+            "description": "Filter by audience name."
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ],
+              "example": "Marketer"
+            },
+            "in": "query",
+            "name": "persona",
+            "required": false,
+            "description": "Filter by persona name. Repeat the parameter for OR semantics."
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ],
+              "example": "en_US"
+            },
+            "in": "query",
+            "name": "language",
+            "required": false,
+            "description": "Filter by BCP 47 language tag."
+          },
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              ],
+              "example": "meta"
+            },
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "description": "Filter by channel. Known values: email, meta, display, linkedin, tiktok, linkedin_organic, meta_organic, ctv. Additional channels may be added — any string is accepted."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2026-01-01T00:00:00.000Z"
+            },
+            "in": "query",
+            "name": "createdAtFrom",
+            "required": false,
+            "description": "Inclusive lower bound (ISO 8601) on createdAt."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2026-12-31T23:59:59.000Z"
+            },
+            "in": "query",
+            "name": "createdAtTo",
+            "required": false,
+            "description": "Exclusive upper bound (ISO 8601) on createdAt."
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 25,
+              "example": 25
+            },
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "description": "Maximum number of items per page (1–50)."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "example": "eyJsYXN0SWQiOiJ1cm46YWFpZDphZW0ifQ"
+            },
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "description": "Opaque cursor from the previous response's `cursor` field."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJhbGciOiJSUz..."
+            },
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "description": "Bearer token from Adobe OAuth Server-to-Server credentials."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "37e7532f1c5a225acf8d2fad131cde8d"
+            },
+            "in": "header",
+            "name": "x-api-key",
+            "required": true,
+            "description": "Client ID from the Adobe Developer Console project."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "36031A56669DEACD0A49402F@AdobeOrg"
+            },
+            "in": "header",
+            "name": "x-ims-org-id",
+            "required": true,
+            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console: open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "in": "header",
+            "name": "x-request-id",
+            "required": false,
+            "description": "Client-generated UUID for request tracing."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "corr-abc-123"
+            },
+            "in": "header",
+            "name": "x-correlation-id",
+            "required": false,
+            "description": "Correlation ID to group related requests."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of experience summaries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "experienceId": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "modifiedAt": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "channel": {
+                            "anyOf": [
+                              {
+                                "$ref": "#/components/schemas/Channel"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "externalTemplateSource": {
+                            "type": "string"
+                          },
+                          "externalTemplateId": {
+                            "type": "string"
+                          },
+                          "externalTemplateMetadata": {
+                            "type": "object",
+                            "additionalProperties": {}
+                          },
+                          "externalAssetMetadata": {
+                            "type": "object",
+                            "additionalProperties": {}
+                          },
+                          "keywords": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "prompt": {
+                            "type": "string"
+                          },
+                          "brands": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "personas": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "products": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "language": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "experienceId",
+                          "createdAt",
+                          "modifiedAt",
+                          "title",
+                          "channel",
+                          "keywords",
+                          "prompt",
+                          "brands",
+                          "personas",
+                          "products",
+                          "language"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "cursor": {
+                      "type": "string"
+                    },
+                    "total": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "items",
+                    "total"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Paginated list of experience summaries"
+                },
+                "example": {
+                  "items": [
+                    {
+                      "experienceId": "urn:aaid:aem:e577c7e1-c119-4892-9b97-59a9ab1927f6",
+                      "createdAt": "2026-02-16T16:30:00.000Z",
+                      "modifiedAt": "2026-02-16T16:30:00.000Z",
+                      "title": "Summer Campaign - LinkedIn",
+                      "channel": "linkedin",
+                      "keywords": [
+                        "image",
+                        "text"
+                      ],
+                      "prompt": "Create LinkedIn ads with a catchy headline, benefit-focused copy, and a clear call to action.",
+                      "brands": [
+                        "Acme"
+                      ],
+                      "personas": [
+                        "Active Lifestyle Enthusiast"
+                      ],
+                      "products": [
+                        "Trail Runner Pro"
+                      ],
+                      "language": [
+                        "en_US"
+                      ]
+                    },
+                    {
+                      "experienceId": "urn:aaid:aem:5b40812f-71f7-430e-8e6e-1f33bb63d252",
+                      "createdAt": "2026-03-01T09:15:00.000Z",
+                      "modifiedAt": "2026-03-01T09:15:00.000Z",
+                      "title": "Spring Email Blast",
+                      "channel": "email",
+                      "keywords": [
+                        "promotional",
+                        "seasonal"
+                      ],
+                      "prompt": "Design a spring promotional email with seasonal imagery and a compelling offer.",
+                      "brands": [
+                        "Acme",
+                        "Pinnacle"
+                      ],
+                      "personas": [
+                        "Marketer"
+                      ],
+                      "products": [
+                        "Trail Runner Pro"
+                      ],
+                      "language": [
+                        "en_US"
+                      ]
+                    }
+                  ],
+                  "cursor": "eyJsYXN0SWQiOiJ1cm46YWFpZDphZW06NWI0MDgxMmYifQ",
+                  "total": 42
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Not Modified"
+          },
+          "401": {
+            "description": "Unauthorized. Indicates that the request has not been applied because it lacks valid authentication credentials for the target resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. Indicates that the server understood the request but refuses to fulfil it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable. Indicates that the target resource does not have a current representation that would be acceptable to the user agent, according to the proactive negotiation header fields received in the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAcceptable"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/experiences/{experienceId}/assets/{assetId}": {
+      "get": {
+        "operationId": "getExperienceAssetDelivery",
+        "summary": "Get Experience Asset Delivery URL",
+        "description": "Returns a 302 redirect to a short-lived pre-signed URL for the requested asset.\n\nThe client's HTTP library follows the redirect automatically. Each call issues a fresh redirect with a new token.\n\nPass `?forceOriginal=true` to retrieve the original binary rendition instead of web-optimized.\n\nThe `assetId` path parameter accepts either a `urn:aaid:aem:…` asset URN or a `Variant_…`-prefixed rendition name (e.g., `Variant_meta_1x1.chromeless.gsthumbnail.mp4`).\n\n**Response headers**: `Location` (signed URL), `X-Asset-Mime-Type`, `Cache-Control: no-store`.",
+        "parameters": [
+          {
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "true",
+                    "false"
+                  ]
+                }
+              ],
+              "default": false
+            },
+            "in": "query",
+            "name": "forceOriginal",
+            "required": false,
+            "description": "When `true`, return the original binary rendition instead of the web-optimized rendition."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "example": "urn:aaid:aem:e577c7e1-c119-4892-9b97-59a9ab1927f6"
+            },
+            "in": "path",
+            "name": "experienceId",
+            "required": true,
+            "description": "Adobe Experience Manager (AEM) experience URN."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "example": "urn:aaid:aem:62d4408b-13cb-4d41-8c6f-127fb2cad067"
+            },
+            "in": "path",
+            "name": "assetId",
+            "required": true,
+            "description": "Adobe Experience Manager (AEM) asset URN."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJhbGciOiJSUz..."
+            },
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "description": "Bearer token from Adobe OAuth Server-to-Server credentials."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "37e7532f1c5a225acf8d2fad131cde8d"
+            },
+            "in": "header",
+            "name": "x-api-key",
+            "required": true,
+            "description": "Client ID from the Adobe Developer Console project."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "36031A56669DEACD0A49402F@AdobeOrg"
+            },
+            "in": "header",
+            "name": "x-ims-org-id",
+            "required": true,
+            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console: open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "in": "header",
+            "name": "x-request-id",
+            "required": false,
+            "description": "Client-generated UUID for request tracing."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "corr-abc-123"
+            },
+            "in": "header",
+            "name": "x-correlation-id",
+            "required": false,
+            "description": "Correlation ID to group related requests."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "302": {
+            "description": "Redirect to pre-signed asset delivery URL",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "description": "Pre-signed URL for the asset."
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request has not been applied because it lacks valid authentication credentials for the target resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. Indicates that the server understood the request but refuses to fulfil it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found. Indicates that the origin server did not find a current representation for the target resource or is not willing to disclose that one exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable. Indicates that the target resource does not have a current representation that would be acceptable to the user agent, according to the proactive negotiation header fields received in the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAcceptable"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable. Indicates that the server is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "A URI reference [RFC3986](https://www.rfc-editor.org/rfc/rfc3986) to a URL, which, when dereferenced, provides human readable documentation for the problem type.  The problem type may be equivalent to the `status` or may be a \"sub-type\".  This URI is not intended to be parsed by clients; rather it should be treated as an opaque string that uniquely represents the error condition as-is."
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "A short, human-readable summary of the problem type."
+                    },
+                    "status": {
+                      "type": "integer",
+                      "description": "The HTTP status code ([RFC9110], Section 15) generated by the origin server for this occurrence of the problem."
+                    },
+                    "detail": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "A human-readable explanation specific to this occurrence of the problem."
+                    },
+                    "requestId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "A unique identifier that is assigned to the request, either by the API caller or by the service itself."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "status",
+                    "detail"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Service Unavailable. Indicates that the server is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/experiences/{experienceId}/template": {
+      "get": {
+        "operationId": "getExperienceTemplate",
+        "summary": "Get Experience Template",
+        "description": "Returns the frozen HTML template captured at experience creation time.\n\nDepending on the storage provider, this endpoint returns either:\n- **302 redirect** — follow `Location` to fetch the HTML from a short-lived pre-signed URL\n- **200 with body** — the HTML is returned directly as `text/html`\n\nClients must handle both response codes.\n\n**404 responses** distinguish two cases via the Problem Details `type` field:\n- `.../errors/not-found` — the experience itself does not exist\n- `.../errors/template-not-available` — the experience exists but has no Handlebars template (e.g. Express experiences)",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "example": "urn:aaid:aem:e577c7e1-c119-4892-9b97-59a9ab1927f6"
+            },
+            "in": "path",
+            "name": "experienceId",
+            "required": true,
+            "description": "Adobe Experience Manager (AEM) experience URN."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJhbGciOiJSUz..."
+            },
+            "in": "header",
+            "name": "authorization",
+            "required": true,
+            "description": "Bearer token from Adobe OAuth Server-to-Server credentials."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "37e7532f1c5a225acf8d2fad131cde8d"
+            },
+            "in": "header",
+            "name": "x-api-key",
+            "required": true,
+            "description": "Client ID from the Adobe Developer Console project."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "36031A56669DEACD0A49402F@AdobeOrg"
+            },
+            "in": "header",
+            "name": "x-ims-org-id",
+            "required": true,
+            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console: open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "550e8400-e29b-41d4-a716-446655440000"
+            },
+            "in": "header",
+            "name": "x-request-id",
+            "required": false,
+            "description": "Client-generated UUID for request tracing."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "corr-abc-123"
+            },
+            "in": "header",
+            "name": "x-correlation-id",
+            "required": false,
+            "description": "Correlation ID to group related requests."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "template content",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "<!DOCTYPE html>\n<html>\n  <body>\n    <h1>{{ headline }}</h1>\n    <p>{{ body }}</p>\n    <img src=\"{{ hero_image }}\" />\n  </body>\n</html>"
+              }
+            }
+          },
+          "302": {
+            "description": "Redirect to pre-signed template delivery URL",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "description": "Pre-signed URL for the HTML template."
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Indicates that the request has not been applied because it lacks valid authentication credentials for the target resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. Indicates that the server understood the request but refuses to fulfil it.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Forbidden"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found. Indicates that the origin server did not find a current representation for the target resource or is not willing to disclose that one exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable. Indicates that the target resource does not have a current representation that would be acceptable to the user agent, according to the proactive negotiation header fields received in the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAcceptable"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://ims-na1.adobelogin.com/ims/token/v3",
+            "scopes": {}
+          }
+        }
+      },
+      "ApiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key"
+      }
+    },
+    "schemas": {
+      "Channel": {
+        "type": "string",
+        "enum": [
+          "email",
+          "meta",
+          "display",
+          "linkedin",
+          "tiktok",
+          "linkedin_organic",
+          "meta_organic",
+          "ctv"
+        ]
+      },
+      "FieldValue": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "additionalProperties": false
+      },
+      "Unauthorized": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A URI reference [RFC3986](https://www.rfc-editor.org/rfc/rfc3986) to a URL, which, when dereferenced, provides human readable documentation for the problem type.  The problem type may be equivalent to the `status` or may be a \"sub-type\".  This URI is not intended to be parsed by clients; rather it should be treated as an opaque string that uniquely represents the error condition as-is."
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A short, human-readable summary of the problem type."
+          },
+          "status": {
+            "type": "integer",
+            "description": "The HTTP status code ([RFC9110], Section 15) generated by the origin server for this occurrence of the problem."
+          },
+          "detail": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A human-readable explanation specific to this occurrence of the problem."
+          },
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A unique identifier that is assigned to the request, either by the API caller or by the service itself."
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail"
+        ],
+        "additionalProperties": false,
+        "description": "Unauthorized. Indicates that the request has not been applied because it lacks valid authentication credentials for the target resource."
+      },
+      "Forbidden": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A URI reference [RFC3986](https://www.rfc-editor.org/rfc/rfc3986) to a URL, which, when dereferenced, provides human readable documentation for the problem type.  The problem type may be equivalent to the `status` or may be a \"sub-type\".  This URI is not intended to be parsed by clients; rather it should be treated as an opaque string that uniquely represents the error condition as-is."
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A short, human-readable summary of the problem type."
+          },
+          "status": {
+            "type": "integer",
+            "description": "The HTTP status code ([RFC9110], Section 15) generated by the origin server for this occurrence of the problem."
+          },
+          "detail": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A human-readable explanation specific to this occurrence of the problem."
+          },
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A unique identifier that is assigned to the request, either by the API caller or by the service itself."
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail"
+        ],
+        "additionalProperties": false,
+        "description": "Forbidden. Indicates that the server understood the request but refuses to fulfil it."
+      },
+      "NotFound": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A URI reference [RFC3986](https://www.rfc-editor.org/rfc/rfc3986) to a URL, which, when dereferenced, provides human readable documentation for the problem type.  The problem type may be equivalent to the `status` or may be a \"sub-type\".  This URI is not intended to be parsed by clients; rather it should be treated as an opaque string that uniquely represents the error condition as-is."
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A short, human-readable summary of the problem type."
+          },
+          "status": {
+            "type": "integer",
+            "description": "The HTTP status code ([RFC9110], Section 15) generated by the origin server for this occurrence of the problem."
+          },
+          "detail": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A human-readable explanation specific to this occurrence of the problem."
+          },
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A unique identifier that is assigned to the request, either by the API caller or by the service itself."
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail"
+        ],
+        "additionalProperties": false,
+        "description": "Not Found. Indicates that the origin server did not find a current representation for the target resource or is not willing to disclose that one exists."
+      },
+      "NotAcceptable": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A URI reference [RFC3986](https://www.rfc-editor.org/rfc/rfc3986) to a URL, which, when dereferenced, provides human readable documentation for the problem type.  The problem type may be equivalent to the `status` or may be a \"sub-type\".  This URI is not intended to be parsed by clients; rather it should be treated as an opaque string that uniquely represents the error condition as-is."
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A short, human-readable summary of the problem type."
+          },
+          "status": {
+            "type": "integer",
+            "description": "The HTTP status code ([RFC9110], Section 15) generated by the origin server for this occurrence of the problem."
+          },
+          "detail": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A human-readable explanation specific to this occurrence of the problem."
+          },
+          "requestId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A unique identifier that is assigned to the request, either by the API caller or by the service itself."
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail"
+        ],
+        "additionalProperties": false,
+        "description": "Not Acceptable. Indicates that the target resource does not have a current representation that would be acceptable to the user agent, according to the proactive negotiation header fields received in the request."
+      }
+    }
+  }
+}

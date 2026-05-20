@@ -1,0 +1,6 @@
+extends:
+  - recommended
+
+apis:
+  genstudio-experience:
+    root: static/genstudio-experience.json
