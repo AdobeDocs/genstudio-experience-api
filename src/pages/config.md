@@ -14,6 +14,4 @@
 - subPages:
     - Getting Started header
     - [Authentication](/getting-started/index.md)
-    - [Create Credentials](/getting-started/create-credentials/index.md)
     - [Technical Usage Notes](/getting-started/usage-notes/index.md)
-    - [Changelog](/getting-started/changelog/index.md)
