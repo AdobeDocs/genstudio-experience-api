@@ -4,7 +4,6 @@
 - pages:
     - [About GenStudio Experience API](/index.md)
     - [Getting Started](/getting-started/index.md)
-    - [Guides](/guides/index.md)
     - [API Reference](/api/index.md)
 
 - buttons:
