@@ -12,7 +12,7 @@ keywords:
   - REST API
 ---
 
-<Superhero slots="heading, text" background="rgb(176, 226, 220)" textColor="navy" />
+<Superhero slots="heading, text" background="rgb(49, 46, 129)" textColor="white" />
 
 # GenStudio Experience API
 
