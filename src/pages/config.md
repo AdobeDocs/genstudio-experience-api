@@ -2,7 +2,7 @@
     - /genstudio-experience-api/
 
 - pages:
-    - [About GenStudio Experience API](/index.md)
+    - [About GenStudio API](/index.md)
     - [Getting Started](/getting-started/index.md)
     - [API Reference](/api/index.md)
 
