@@ -1,0 +1,26 @@
+{
+  "total": 18,
+  "offset": 0,
+  "limit": 18,
+  "data": [
+    {"Source": "/genstudio-experience-api", "Destination": "/genstudio-api/"},
+    {"Source": "/genstudio-experience-api/", "Destination": "/genstudio-api/"},
+    {"Source": "/genstudio-experience-api/index", "Destination": "/genstudio-api/"},
+    {"Source": "/genstudio-experience-api/getting-started", "Destination": "/genstudio-api/getting-started/"},
+    {"Source": "/genstudio-experience-api/getting-started/", "Destination": "/genstudio-api/getting-started/"},
+    {"Source": "/genstudio-experience-api/getting-started/index", "Destination": "/genstudio-api/getting-started/"},
+    {"Source": "/genstudio-experience-api/getting-started/changelog", "Destination": "/genstudio-api/getting-started/changelog/"},
+    {"Source": "/genstudio-experience-api/getting-started/changelog/", "Destination": "/genstudio-api/getting-started/changelog/"},
+    {"Source": "/genstudio-experience-api/getting-started/changelog/index", "Destination": "/genstudio-api/getting-started/changelog/"},
+    {"Source": "/genstudio-experience-api/getting-started/usage-notes", "Destination": "/genstudio-api/getting-started/usage-notes/"},
+    {"Source": "/genstudio-experience-api/getting-started/usage-notes/", "Destination": "/genstudio-api/getting-started/usage-notes/"},
+    {"Source": "/genstudio-experience-api/getting-started/usage-notes/index", "Destination": "/genstudio-api/getting-started/usage-notes/"},
+    {"Source": "/genstudio-experience-api/guides", "Destination": "/genstudio-api/guides/"},
+    {"Source": "/genstudio-experience-api/guides/", "Destination": "/genstudio-api/guides/"},
+    {"Source": "/genstudio-experience-api/guides/index", "Destination": "/genstudio-api/guides/"},
+    {"Source": "/genstudio-experience-api/api", "Destination": "/genstudio-api/api/"},
+    {"Source": "/genstudio-experience-api/api/", "Destination": "/genstudio-api/api/"},
+    {"Source": "/genstudio-experience-api/api/index", "Destination": "/genstudio-api/api/"}
+  ],
+  ":type": "sheet"
+}
