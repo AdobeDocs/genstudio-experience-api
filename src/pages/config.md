@@ -2,7 +2,7 @@
     - /genstudio-experience-api/
 
 - pages:
-    - [About GenStudio Experience API](/index.md)
+    - [About GenStudio API](/index.md)
     - [Getting Started](/getting-started/index.md)
     - [API Reference](/api/index.md)
 
@@ -12,5 +12,5 @@
 
 - subPages:
     - Getting Started header
-    - [Authentication](/getting-started/index.md)
+    - [Experience API Authentication](/getting-started/index.md)
     - [Technical Usage Notes](/getting-started/usage-notes/index.md)

@@ -1,5 +1,5 @@
 ---
-title: GenStudio Experience API overview
+title: GenStudio API overview
 description: Retrieve approved GenStudio Experiences, assets, and templates through a storage-agnostic REST API for Adobe GenStudio for Performance Marketing.
 hideBreadcrumbNav: true
 keywords:
@@ -13,25 +13,35 @@ keywords:
 ---
 
 <Superhero slots="heading, text" background="rgb(49, 46, 129)" textColor="white" />
+# GenStudio API documentation
 
-# GenStudio Experience API
+GenStudio for Performance Marketing is a platform that allows you to create and manage your performance marketing campaigns. Here you'll find the APIs we offer to help you build your own integrations with GenStudio.
+
+<DiscoverBlock slots="heading, link, text"/>
+
+### Explore our APIs
+
+[GenStudio Experience API](#genstudio-experience-api)
+
+Retrieve approved GenStudio Experiences and deliver Experience data and assets to your applications at scale.
+
+## GenStudio Experience API
 
 Retrieve approved GenStudio Experiences and deliver Experience data and assets to your applications at scale.
 
 The GenStudio Experience API is a storage-agnostic public REST API for Adobe GenStudio for Performance Marketing. Use it to read approved Experiences, list and filter Experience summaries, download assets through pre-signed URLs, and retrieve HTML templates.
 
-## What can I do with the GenStudio Experience API?
+### What can I do with the GenStudio Experience API?
 
 The GenStudio Experience API lets your server-side applications:
 
 * **Get a full Experience** — Retrieve a single Experience by ID, including fields, variants, and asset URLs.
-* **List Experiences** — Return a paginated, filterable list of Experience summaries by brand, campaign, channel, product, audience, persona, language, and date range.
+* **List Experiences** — Return a paginated, filterable list of Experience summaries by channel, language, and date range.
 * **Deliver Experience assets** — Obtain a short-lived pre-signed URL for an asset or rendition, including web-optimized or original binary output.
 * **Retrieve Experience templates** — Access the HTML template captured at Experience creation time, via direct response or redirect.
 
-## Why choose the GenStudio Experience API?
+### Why choose the GenStudio Experience API?
 
-* **Storage-agnostic contract** — Integrate once; the API returns consistent JSON whether the backing store is S3 or AEM. For supported storage providers and rate limits, see [usage notes](getting-started/usage-notes/index.md).
 * **Efficient reads** — Support for conditional requests and cursor-based pagination on list calls.
 * **Enterprise-ready auth** — OAuth Server-to-Server flow aligned with Adobe Developer Console projects.
 
