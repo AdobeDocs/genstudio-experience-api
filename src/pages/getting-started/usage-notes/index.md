@@ -14,7 +14,7 @@ keywords:
 ---
 # Experience API Technical Usage Notes
 
-This page offers technical usage notes for the Experience API.
+This page offers technical usage notes for the GenStudio Experience API.
 
 ## Rate limits
 

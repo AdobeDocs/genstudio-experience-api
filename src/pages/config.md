@@ -12,5 +12,5 @@
 
 - subPages:
     - Getting Started header
-    - [Authentication](/getting-started/index.md)
+    - [Experience API Authentication](/getting-started/index.md)
     - [Technical Usage Notes](/getting-started/usage-notes/index.md)
