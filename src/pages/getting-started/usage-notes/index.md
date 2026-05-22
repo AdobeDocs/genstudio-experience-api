@@ -14,16 +14,7 @@ keywords:
 ---
 # Experience API Technical Usage Notes
 
-This page offers technical usage notes for the Experience API.
-
-## Storage providers
-
-The Experience API is storage-agnostic. This means that the API can be used with any storage provider that is supported by Adobe GenStudio for Performance Marketing. The API returns the same shape, regardless of the underlying storage provider.
-
-The following storage providers are supported by the Experience API:
-
-* Amazon S3 (Simple Storage Service)
-* Adobe Experience Manager (AEM)
+This page offers technical usage notes for the GenStudio Experience API.
 
 ## Rate limits
 

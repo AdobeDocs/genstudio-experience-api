@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "GenStudio Experience API",
-    "description": "This service is a storage-agnostic public API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences. \n\n**Storage-agnostic**: All endpoints return the same shape, regardless of the underlying storage provider. See usage notes for the [list of supported storage providers](https://developer.adobe.com/genstudio-experience-api/getting-started/usage-notes/).",
+    "title": "GenStudio API",
+    "description": "This service is a storage-agnostic public API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences. \n\n**Storage-agnostic**: All endpoints return the same shape, regardless of the underlying storage provider. See usage notes for the [list of supported storage providers](https://developer.adobe.com/genstudio-api/getting-started/usage-notes/).",
     "version": "20251029T000000Z"
   },
   "servers": [
