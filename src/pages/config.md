@@ -1,5 +1,5 @@
 - pathPrefix:
-    - /genstudio-experience-api/
+    - /genstudio-api/
 
 - pages:
     - [About GenStudio Experience API](/index.md)
