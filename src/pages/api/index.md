@@ -4,4 +4,4 @@ description: Reference for the <> API
 layout: none
 ---
 
-<RedoclyAPIBlock src="/genstudio-experience-api/genstudio-experience.json" hideTryItPanel scrollYOffset={64} generateCodeSamples="languages: [{lang: 'curl'}]" />
+<RedoclyAPIBlock src="/genstudio-api/genstudio-experience.json" hideTryItPanel scrollYOffset={64} generateCodeSamples="languages: [{lang: 'curl'}]" />
