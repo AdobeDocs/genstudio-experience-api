@@ -31,7 +31,7 @@ Retrieve approved GenStudio Experiences and deliver Experience data and assets t
 
 ### Experience API architecture may change
 
-This API may experience major development in the next few months as we respond to feedback and requests from the community.
+This service may experience breaking changes in the next few months as we respond to feedback and requests from the community.
 
 Retrieve approved GenStudio Experiences and deliver Experience data and assets to your applications at scale.
 
