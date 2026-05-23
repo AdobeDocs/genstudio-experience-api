@@ -27,6 +27,12 @@ Retrieve approved GenStudio Experiences and deliver Experience data and assets t
 
 ## GenStudio Experience API
 
+<Announcement slots="heading, text" className="request-access-announcement" variant="secondary" borderColor="#c148ed" hasborder="true" />
+
+### Experience API architecture may change
+
+This service may experience breaking changes in the next few months as we respond to feedback and requests from the community.
+
 Retrieve approved GenStudio Experiences and deliver Experience data and assets to your applications at scale.
 
 The GenStudio Experience API is a storage-agnostic public REST API for Adobe GenStudio for Performance Marketing. Use it to read approved Experiences, list and filter Experience summaries, download assets through pre-signed URLs, and retrieve HTML templates.
