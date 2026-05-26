@@ -3,7 +3,7 @@
   "info": {
     "title": "GenStudio API",
     "description": "API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences.",
-    "version": "20260526T184925Z",
+    "version": "20260526T223928Z",
     "license": {
       "name": "Adobe Proprietary",
       "url": "https://www.adobe.com/legal/terms.html"
@@ -251,7 +251,7 @@
       "get": {
         "operationId": "getExperience",
         "summary": "Get Experience",
-        "description": "Retrieves a single experience by ID, including all fields, variants, and asset URLs.\n\nSupports conditional requests via the `If-None-Match` header. If the provided ETag matches, returns `304 Not Modified` with no body.\n\n**Rate limit**: 60 requests per minute per organization.",
+        "description": "Retrieves a single experience by ID, including all fields, variants, and asset URLs.\n\nSupports conditional requests via the `If-None-Match` header. If the provided ETag matches, returns `304 Not Modified` with no body.\n\n**Backward compatibility**: New optional fields may be added to the response at any time. Clients must tolerate unknown properties.\n\n**Rate limit**: 60 requests per minute per organization.",
         "parameters": [
           {
             "schema": {
@@ -710,7 +710,7 @@
       "get": {
         "operationId": "listExperiences",
         "summary": "List Experiences",
-        "description": "Returns a paginated list of Experience summaries filtered by query parameters.\n\nSupports Cursor-based pagination via the `cursor` parameter. Use the `cursor` value from the previous response to retrieve the next page.\n\nSupports conditional requests via the `If-None-Match` header. If the provided ETag matches, returns `304 Not Modified` with no body.\n\n**Filters** (OR semantics within each): `language`, `channel`, `createdAtFrom`, `createdAtTo`.\n\n**Rate limit**: 20 requests per minute per organization.",
+        "description": "Returns a paginated list of Experience summaries filtered by query parameters.\n\nSupports Cursor-based pagination via the `cursor` parameter. Use the `cursor` value from the previous response to retrieve the next page.\n\nSupports conditional requests via the `If-None-Match` header. If the provided ETag matches, returns `304 Not Modified` with no body.\n\n**Filters** (OR semantics within each): `language`, `channel`, `createdAtFrom`, `createdAtTo`.\n\n**Backward compatibility**: New optional fields may be added to items in the response at any time. Clients must tolerate unknown properties.\n\n**Rate limit**: 20 requests per minute per organization.",
         "parameters": [
           {
             "schema": {
