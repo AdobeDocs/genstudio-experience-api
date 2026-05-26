@@ -3,38 +3,14 @@
   "info": {
     "title": "GenStudio API",
     "description": "API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences.",
-    "version": "2026-05-22T23:31:40.731Z"
+    "version": "20260526T184925Z",
+    "license": {
+      "name": "Adobe Proprietary",
+      "url": "https://www.adobe.com/legal/terms.html"
+    }
   },
   "components": {
     "schemas": {
-      "ProblemDetails": {
-        "type": "object",
-        "required": ["type", "title", "status", "detail"],
-        "properties": {
-          "type": {
-            "type": "string",
-            "format": "uri",
-            "description": "URI reference identifying the problem type"
-          },
-          "title": {
-            "type": "string",
-            "description": "Short human-readable summary"
-          },
-          "status": {
-            "type": "integer",
-            "description": "HTTP status code"
-          },
-          "detail": {
-            "type": "string",
-            "description": "Human-readable explanation"
-          },
-          "requestId": {
-            "type": "string",
-            "format": "uuid",
-            "description": "Unique request identifier for debugging"
-          }
-        }
-      },
       "Channel": {
         "type": "string",
         "enum": [
@@ -675,16 +651,7 @@
             }
           },
           "304": {
-            "description": "Not Modified",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "enum": ["null"],
-                  "nullable": true,
-                  "description": "Not Modified"
-                }
-              }
-            }
+            "description": "Not Modified"
           },
           "401": {
             "description": "Unauthorized. Indicates that the request has not been applied because it lacks valid authentication credentials for the target resource.",
@@ -1094,16 +1061,7 @@
             }
           },
           "304": {
-            "description": "Not Modified",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "enum": ["null"],
-                  "nullable": true,
-                  "description": "Not Modified"
-                }
-              }
-            }
+            "description": "Not Modified"
           },
           "401": {
             "description": "Unauthorized. Indicates that the request has not been applied because it lacks valid authentication credentials for the target resource.",
@@ -1152,25 +1110,8 @@
       "get": {
         "operationId": "getExperienceAssetDelivery",
         "summary": "Get Experience Asset Delivery URL",
-        "description": "Returns a **302 redirect** to a short-lived pre-signed URL for the requested asset. The 302 is the expected success response — there is no 200 body.\n\nThe client's HTTP library follows the redirect automatically. Each call issues a fresh redirect with a new token.\n\n**Locating the `assetId`**: Use the asset `url` fields returned by `GET /experiences/:id`. Each URL ends with the `assetId` to pass here. The `assetId` must belong to the given `experienceId` — passing an asset from a different experience returns 404.\n\n**Accepted `assetId` formats**:\n- Asset URN: `urn:aaid:aem:62d4408b-13cb-4d41-8c6f-127fb2cad067`\n- Composite asset reference (org + account + URN): `36031A56669DEACD0A49402F@AdobeOrg;acct:aem-cmstg-p106653-e326705@adobe.com;urn:aaid:aem:f773c9cf-7bf1-4986-a4ac-7e9a6d209a1b`\n- Variant rendition name: `Variant_meta_1x1.chromeless.gsthumbnail.mp4`\n\nPass `?forceOriginal=true` to retrieve the original binary rendition instead of web-optimized.\n\n**Response headers on 302**: `Location` (signed URL, valid ≤5 min), `X-Asset-Mime-Type`, `Cache-Control: no-store`.\n\n**Rate limit**: 60 requests per minute per organization.",
+        "description": "Returns a **302 redirect** to a short-lived pre-signed URL for the requested asset. The 302 is the expected success response — there is no 200 body.\n\nThe client's HTTP library follows the redirect automatically. Each call issues a fresh redirect with a new token.\n\n**Locating the `assetId`**: Use the asset `url` fields returned by `GET /experiences/:id`. Each URL ends with the `assetId` to pass here. The `assetId` must belong to the given `experienceId` — passing an asset from a different experience returns 404.\n\n**Accepted `assetId` formats**:\n- Asset URN: `urn:aaid:aem:62d4408b-13cb-4d41-8c6f-127fb2cad067`\n- Composite asset reference (org + account + URN): `36031A56669DEACD0A49402F@AdobeOrg;acct:aem-cmstg-p106653-e326705@adobe.com;urn:aaid:aem:f773c9cf-7bf1-4986-a4ac-7e9a6d209a1b`\n- Variant rendition name: `Variant_meta_1x1.chromeless.gsthumbnail.mp4`\n\n**Response headers on 302**: `Location` (signed URL, valid up to 60 minutes), `X-Asset-Mime-Type`, `Cache-Control: no-store`.\n\n**Rate limit**: 60 requests per minute per organization.",
         "parameters": [
-          {
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "boolean"
-                },
-                {
-                  "type": "string",
-                  "enum": ["true", "false"]
-                }
-              ],
-              "default": false
-            },
-            "in": "query",
-            "name": "forceOriginal",
-            "required": false
-          },
           {
             "schema": {
               "type": "string",
@@ -1253,7 +1194,7 @@
                   "type": "string",
                   "format": "uri"
                 },
-                "description": "Short-lived pre-signed URL for the asset; valid for ≤5 minutes",
+                "description": "Pre-signed URL for the asset; valid for up to 60 minutes",
                 "example": "https://delivery-p106653-e326705.adobeaemcloud.com/adobe/assets/e577c7e1-c119-4892-9b97-59a9ab1927f6/as/variant-4x5.png?token=eyJhbGci...&expiryTime=2026-02-23T11:30:00.000Z"
               },
               "X-Asset-Mime-Type": {
@@ -1340,7 +1281,7 @@
       "get": {
         "operationId": "getExperienceTemplate",
         "summary": "Get Experience Template",
-        "description": "Returns the frozen Handlebars HTML template captured at experience creation time.\n\nDepending on the storage provider, this endpoint returns either:\n- **302 redirect** — follow `Location` to fetch the HTML from a short-lived pre-signed URL\n- **200 with body** — the HTML is returned directly as `text/html`\n\nClients must handle both response codes.\n\n**Express experiences are not supported**: Experiences created with Adobe Express do not have a Handlebars template. Calling this endpoint for an Express experience returns `404` with Problem Details `type: .../errors/template-not-available`.\n\n**404 responses** distinguish two cases via the Problem Details `type` field:\n- `.../errors/not-found` — the experience itself does not exist\n- `.../errors/template-not-available` — the experience exists but has no Handlebars template (e.g. Express experiences)\n\n**Rate limit**: 60 requests per minute per organization.",
+        "description": "Returns the frozen Handlebars HTML template captured at experience creation time.\n\nDepending on the storage provider, this endpoint returns either:\n- **302 redirect** — follow `Location` to fetch the HTML from a short-lived pre-signed URL\n- **200 with body** — the HTML is returned directly as `text/html`\n\nClients must handle both response codes.\n\n**Express experiences are not supported**: Experiences created with Adobe Express do not have a Handlebars template. Calling this endpoint for an Express experience returns `404`.\n\n**Rate limit**: 60 requests per minute per organization.",
         "parameters": [
           {
             "schema": {
