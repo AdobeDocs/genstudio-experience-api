@@ -3,7 +3,7 @@
   "info": {
     "title": "GenStudio API",
     "description": "API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences.",
-    "version": "20260526T223928Z",
+    "version": "20260526T224646Z",
     "license": {
       "name": "Adobe Proprietary",
       "url": "https://www.adobe.com/legal/terms.html"
@@ -1108,8 +1108,8 @@
     },
     "/experiences/{experienceId}/assets/{assetId}": {
       "get": {
-        "operationId": "getExperienceAssetDelivery",
-        "summary": "Get Experience Asset Delivery URL",
+        "operationId": "getExperienceAsset",
+        "summary": "Get Experience Asset",
         "description": "Returns a **302 redirect** to a short-lived pre-signed URL for the requested asset. The 302 is the expected success response — there is no 200 body.\n\nThe client's HTTP library follows the redirect automatically. Each call issues a fresh redirect with a new token.\n\n**Locating the `assetId`**: Use the asset `url` fields returned by `GET /experiences/:id`. Each URL ends with the `assetId` to pass here. The `assetId` must belong to the given `experienceId` — passing an asset from a different experience returns 404.\n\n**Accepted `assetId` formats**:\n- Asset URN: `urn:aaid:aem:62d4408b-13cb-4d41-8c6f-127fb2cad067`\n- Composite asset reference (org + account + URN): `36031A56669DEACD0A49402F@AdobeOrg;acct:aem-cmstg-p106653-e326705@adobe.com;urn:aaid:aem:f773c9cf-7bf1-4986-a4ac-7e9a6d209a1b`\n- Variant rendition name: `Variant_meta_1x1.chromeless.gsthumbnail.mp4`\n\n**Response headers on 302**: `Location` (signed URL, valid up to 60 minutes), `X-Asset-Mime-Type`, `Cache-Control: no-store`.\n\n**Rate limit**: 60 requests per minute per organization.",
         "parameters": [
           {
