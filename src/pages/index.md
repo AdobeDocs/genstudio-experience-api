@@ -27,9 +27,11 @@ Retrieve approved GenStudio Experiences and deliver Experience data and assets t
 
 ## GenStudio Experience API
 
-<Announcement slots="heading, text" className="request-access-announcement" variant="secondary" borderColor="#c148ed" hasborder="true" />
+<Announcement slots="heading, text, text" className="request-access-announcement" variant="secondary" borderColor="#c148ed" hasborder="true" />
 
 ### Experience API architecture may change
+
+The GenStudio Experience API is backward compatible. We may add new optional fields to API responses over time. Design your clients to ignore unknown properties so integrations keep working without code changes when responses grow.
 
 This service may experience breaking changes in the next few months as we respond to feedback and requests from the community.
 
