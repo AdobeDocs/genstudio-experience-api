@@ -4,13 +4,6 @@ description: This page contains technical usage notes for the Experience API.
 keywords:
 - experience api
 - technical usage notes
-- storage providers
-- supported storage providers
-- storage agnostic
-- storage agnostic api
-- storage agnostic api notes
-- storage agnostic api usage notes
-- storage agnostic api technical usage notes
 ---
 # Experience API Technical Usage Notes
 
