@@ -3,7 +3,7 @@
   "info": {
     "title": "GenStudio API",
     "description": "API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences.",
-    "version": "20260526T234229Z",
+    "version": "20260528T011957Z",
     "license": {
       "name": "Adobe Proprietary",
       "url": "https://www.adobe.com/legal/terms.html"
@@ -367,9 +367,6 @@
                         "type": "string"
                       }
                     },
-                    "prompt": {
-                      "type": "string"
-                    },
                     "brands": {
                       "type": "array",
                       "items": {
@@ -439,25 +436,12 @@
                           "aspectRatio": {
                             "type": "string"
                           },
-                          "channel": {
-                            "anyOf": [
-                              {
-                                "$ref": "#/components/schemas/Channel"
-                              },
-                              {
-                                "type": "string"
-                              }
-                            ]
-                          },
                           "isMain": {
                             "type": "boolean"
                           },
                           "asset": {
                             "type": "object",
                             "properties": {
-                              "assetId": {
-                                "type": "string"
-                              },
                               "url": {
                                 "type": "string",
                                 "format": "uri"
@@ -497,9 +481,6 @@
                                       "fieldReference": {
                                         "type": "string"
                                       },
-                                      "assetId": {
-                                        "type": "string"
-                                      },
                                       "url": {
                                         "type": "string",
                                         "format": "uri"
@@ -525,9 +506,6 @@
                                 "fieldReference": {
                                   "type": "string"
                                 },
-                                "assetId": {
-                                  "type": "string"
-                                },
                                 "url": {
                                   "type": "string",
                                   "format": "uri"
@@ -541,7 +519,7 @@
                             }
                           }
                         },
-                        "required": ["variantKey", "channel", "isMain", "fields"],
+                        "required": ["variantKey", "isMain", "fields"],
                         "additionalProperties": false
                       }
                     }
@@ -553,7 +531,6 @@
                     "title",
                     "channel",
                     "keywords",
-                    "prompt",
                     "brands",
                     "personas",
                     "products",
@@ -571,7 +548,6 @@
                   "title": "Summer Campaign - LinkedIn",
                   "channel": "linkedin",
                   "keywords": ["image", "text"],
-                  "prompt": "Create LinkedIn ads with a catchy headline, benefit-focused copy, and a clear call to action.",
                   "brands": [
                     {
                       "name": "Acme"
@@ -593,10 +569,8 @@
                     {
                       "variantKey": "Variant_linkedin_4x5_0",
                       "aspectRatio": "4:5",
-                      "channel": "linkedin",
                       "isMain": true,
                       "asset": {
-                        "assetId": "Variant_linkedin_4x5_0.chromeless.gsthumbnail.mp4",
                         "url": "https://genstudio.adobe.io/experiences/urn:aaid:aem:e577c7e1-c119-4892-9b97-59a9ab1927f6/assets/Variant_linkedin_4x5_0.chromeless.gsthumbnail.mp4",
                         "mimeType": "video/mp4"
                       },
@@ -622,7 +596,6 @@
                           "assets": [
                             {
                               "fieldReference": "pod1_image",
-                              "assetId": "urn:aaid:aem:62d4408b-13cb-4d41-8c6f-127fb2cad067",
                               "url": "https://genstudio.adobe.io/experiences/urn:aaid:aem:e577c7e1-c119-4892-9b97-59a9ab1927f6/assets/urn:aaid:aem:62d4408b-13cb-4d41-8c6f-127fb2cad067"
                             }
                           ]
@@ -633,7 +606,6 @@
                     {
                       "variantKey": "Variant_linkedin_1x1_1",
                       "aspectRatio": "1:1",
-                      "channel": "linkedin",
                       "isMain": false,
                       "fields": {
                         "headline": {
@@ -906,9 +878,6 @@
                               "type": "string"
                             }
                           },
-                          "prompt": {
-                            "type": "string"
-                          },
                           "brands": {
                             "type": "array",
                             "items": {
@@ -975,7 +944,6 @@
                           "title",
                           "channel",
                           "keywords",
-                          "prompt",
                           "brands",
                           "personas",
                           "products",
@@ -1005,7 +973,6 @@
                       "title": "Summer Campaign - LinkedIn",
                       "channel": "linkedin",
                       "keywords": ["image", "text"],
-                      "prompt": "Create LinkedIn ads with a catchy headline, benefit-focused copy, and a clear call to action.",
                       "brands": [
                         {
                           "name": "Acme"
@@ -1031,7 +998,6 @@
                       "title": "Spring Email Blast",
                       "channel": "email",
                       "keywords": ["promotional", "seasonal"],
-                      "prompt": "Design a spring promotional email with seasonal imagery and a compelling offer.",
                       "brands": [
                         {
                           "name": "Acme"
@@ -1309,151 +1275,6 @@
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ServiceUnavailable"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/experiences/{experienceId}/template": {
-      "get": {
-        "operationId": "getExperienceTemplate",
-        "summary": "Get Experience Template",
-        "description": "Returns the frozen Handlebars HTML template captured at experience creation time.\n\nDepending on the storage provider, this endpoint returns either:\n- **302 redirect** — follow `Location` to fetch the HTML from a short-lived pre-signed URL\n- **200 with body** — the HTML is returned directly as `text/html`\n\nClients must handle both response codes.\n\n**Express experiences are not supported**: Experiences created with Adobe Express do not have a Handlebars template. Calling this endpoint for an Express experience returns `404`.\n\n**Rate limit**: 60 requests per minute per organization.",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "minLength": 1,
-              "example": "urn:aaid:aem:e577c7e1-c119-4892-9b97-59a9ab1927f6"
-            },
-            "in": "path",
-            "name": "experienceId",
-            "required": true,
-            "description": "GenStudio experience URN."
-          },
-          {
-            "schema": {
-              "type": "string",
-              "example": "Bearer eyJhbGciOiJSUz..."
-            },
-            "in": "header",
-            "name": "authorization",
-            "required": true,
-            "description": "Bearer token from Adobe OAuth Server-to-Server credentials"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "example": "37e7532f1c5a225acf8d2fad131cde8d"
-            },
-            "in": "header",
-            "name": "x-api-key",
-            "required": true,
-            "description": "Client ID from the Adobe Developer Console project"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "example": "36031A56669DEACD0A49402F@AdobeOrg"
-            },
-            "in": "header",
-            "name": "x-ims-org-id",
-            "required": true,
-            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console: open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID."
-          },
-          {
-            "schema": {
-              "type": "string",
-              "example": "550e8400-e29b-41d4-a716-446655440000"
-            },
-            "in": "header",
-            "name": "x-request-id",
-            "required": false,
-            "description": "Client-generated UUID for request tracing"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "example": "corr-abc-123"
-            },
-            "in": "header",
-            "name": "x-correlation-id",
-            "required": false,
-            "description": "Correlation ID to group related requests"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "template content",
-            "content": {
-              "text/html": {
-                "schema": {
-                  "type": "string"
-                },
-                "example": "<!DOCTYPE html>\n<html>\n  <body>\n    <h1>{{ headline }}</h1>\n    <p>{{ body }}</p>\n    <img src=\"{{ hero_image }}\" />\n  </body>\n</html>"
-              }
-            }
-          },
-          "302": {
-            "description": "Redirect to pre-signed template delivery URL",
-            "headers": {
-              "Location": {
-                "schema": {
-                  "type": "string",
-                  "format": "uri"
-                },
-                "description": "Pre-signed URL for the HTML template"
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized. Indicates that the request has not been applied because it lacks valid authentication credentials for the target resource.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Unauthorized"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden. Indicates that the server understood the request but refuses to fulfil it.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Forbidden"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found. Indicates that the origin server did not find a current representation for the target resource or is not willing to disclose that one exists.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NotFound"
-                }
-              }
-            }
-          },
-          "406": {
-            "description": "Not Acceptable. Indicates that the target resource does not have a current representation that would be acceptable to the user agent, according to the proactive negotiation header fields received in the request.",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NotAcceptable"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests. Indicates that the user has sent too many requests in a given amount of time (\"rate limiting\").",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TooManyRequests"
                 }
               }
             }
