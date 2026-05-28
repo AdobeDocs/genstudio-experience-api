@@ -13,6 +13,9 @@
   "engines": {
     "node": "^24.11.0"
   },
+  "devDependencies": {
+    "@redocly/cli": "^1.34.0"
+  },
   "scripts": {
     "dev": "npx --yes --prefer-online github:AdobeDocs/adp-devsite-utils dev",
     "buildNavigation": "npx --yes --prefer-online github:AdobeDocs/adp-devsite-utils buildNavigation -v",
