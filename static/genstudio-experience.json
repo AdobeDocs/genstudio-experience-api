@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "title": "GenStudio API",
-    "description": "API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences.",
-    "version": "20260528T011957Z",
+    "description": "API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences.\n\n**Experimental API**: These endpoints are experimental and require the `X-Adobe-Accept-Experimental: 1` header on every request. Requests without this header will receive a `400 Bad Request` response. This header signals that the consumer acknowledges the experimental nature of these APIs and that breaking changes may occur without prior notice. Note: this header requirement is temporary and will be removed once the API graduates to stable.",
+    "version": "20260601T180505Z",
     "license": {
       "name": "Adobe Proprietary",
       "url": "https://www.adobe.com/legal/terms.html"
@@ -313,6 +313,17 @@
             "name": "x-correlation-id",
             "required": false,
             "description": "Correlation ID to group related requests"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": ["1"],
+              "example": "1"
+            },
+            "in": "header",
+            "name": "x-adobe-accept-experimental",
+            "required": true,
+            "description": "Required opt-in header for experimental API endpoints. Must be set to \"1\". Requests without this header will receive a 400 Bad Request response."
           }
         ],
         "responses": {
@@ -338,14 +349,7 @@
                       "type": "string"
                     },
                     "channel": {
-                      "anyOf": [
-                        {
-                          "$ref": "#/components/schemas/Channel"
-                        },
-                        {
-                          "type": "string"
-                        }
-                      ]
+                      "$ref": "#/components/schemas/Channel"
                     },
                     "externalTemplateSource": {
                       "type": "string"
@@ -419,7 +423,7 @@
                         "additionalProperties": false
                       }
                     },
-                    "language": {
+                    "languages": {
                       "type": "array",
                       "items": {
                         "type": "string"
@@ -430,9 +434,6 @@
                       "items": {
                         "type": "object",
                         "properties": {
-                          "variantKey": {
-                            "type": "string"
-                          },
                           "aspectRatio": {
                             "type": "string"
                           },
@@ -519,7 +520,7 @@
                             }
                           }
                         },
-                        "required": ["variantKey", "isMain", "fields"],
+                        "required": ["isMain", "fields"],
                         "additionalProperties": false
                       }
                     }
@@ -535,7 +536,7 @@
                     "personas",
                     "products",
                     "campaigns",
-                    "language",
+                    "languages",
                     "variants"
                   ],
                   "additionalProperties": false,
@@ -564,10 +565,9 @@
                     }
                   ],
                   "campaigns": [],
-                  "language": ["en_US"],
+                  "languages": ["en_US"],
                   "variants": [
                     {
-                      "variantKey": "Variant_linkedin_4x5_0",
                       "aspectRatio": "4:5",
                       "isMain": true,
                       "asset": {
@@ -604,7 +604,6 @@
                       "assets": []
                     },
                     {
-                      "variantKey": "Variant_linkedin_1x1_1",
                       "aspectRatio": "1:1",
                       "isMain": false,
                       "fields": {
@@ -682,7 +681,7 @@
       "get": {
         "operationId": "listExperiences",
         "summary": "List Experiences",
-        "description": "Returns a paginated list of Experience summaries filtered by query parameters.\n\nSupports Cursor-based pagination via the `cursor` parameter. Use the `cursor` value from the previous response to retrieve the next page.\n\nSupports conditional requests via the `If-None-Match` header. If the provided ETag matches, returns `304 Not Modified` with no body.\n\n**Filters** (OR semantics within each): `language`, `channel`, `createdAtFrom`, `createdAtTo`.\n\n**Backward compatibility**: New optional fields may be added to items in the response at any time. Clients must tolerate unknown properties.\n\n**Rate limit**: 20 requests per minute per organization.",
+        "description": "Returns a paginated list of Experience summaries filtered by query parameters.\n\nSupports Cursor-based pagination via the `cursor` parameter. Use the `cursor` value from the previous response to retrieve the next page.\n\nSupports conditional requests via the `If-None-Match` header. If the provided ETag matches, returns `304 Not Modified` with no body.\n\n**Filters** (OR semantics within each): `languages`, `channel`, `createdAtFrom`, `createdAtTo`.\n\n**Backward compatibility**: New optional fields may be added to items in the response at any time. Clients must tolerate unknown properties.\n\n**Rate limit**: 20 requests per minute per organization.",
         "parameters": [
           {
             "schema": {
@@ -696,13 +695,12 @@
                     "type": "string"
                   }
                 }
-              ],
-              "example": "en_US"
+              ]
             },
             "in": "query",
-            "name": "language",
+            "name": "languages",
             "required": false,
-            "description": "Filter by BCP 47 language tag."
+            "description": "BCP 47 language tag to filter by, exact match (case-insensitive)"
           },
           {
             "schema": {
@@ -819,6 +817,17 @@
             "name": "x-correlation-id",
             "required": false,
             "description": "Correlation ID to group related requests"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": ["1"],
+              "example": "1"
+            },
+            "in": "header",
+            "name": "x-adobe-accept-experimental",
+            "required": true,
+            "description": "Required opt-in header for experimental API endpoints. Must be set to \"1\". Requests without this header will receive a 400 Bad Request response."
           }
         ],
         "responses": {
@@ -849,14 +858,7 @@
                             "type": "string"
                           },
                           "channel": {
-                            "anyOf": [
-                              {
-                                "$ref": "#/components/schemas/Channel"
-                              },
-                              {
-                                "type": "string"
-                              }
-                            ]
+                            "$ref": "#/components/schemas/Channel"
                           },
                           "externalTemplateSource": {
                             "type": "string"
@@ -930,7 +932,7 @@
                               "additionalProperties": false
                             }
                           },
-                          "language": {
+                          "languages": {
                             "type": "array",
                             "items": {
                               "type": "string"
@@ -948,19 +950,16 @@
                           "personas",
                           "products",
                           "campaigns",
-                          "language"
+                          "languages"
                         ],
                         "additionalProperties": false
                       }
                     },
                     "cursor": {
                       "type": "string"
-                    },
-                    "total": {
-                      "type": "number"
                     }
                   },
-                  "required": ["items", "total"],
+                  "required": ["items"],
                   "additionalProperties": false,
                   "description": "Paginated list of Experience summaries"
                 },
@@ -989,7 +988,7 @@
                         }
                       ],
                       "campaigns": [],
-                      "language": ["en_US"]
+                      "languages": ["en_US"]
                     },
                     {
                       "experienceId": "urn:aaid:aem:5b40812f-71f7-430e-8e6e-1f33bb63d252",
@@ -1017,11 +1016,10 @@
                         }
                       ],
                       "campaigns": [],
-                      "language": ["en_US"]
+                      "languages": ["en_US"]
                     }
                   ],
-                  "cursor": "eyJsYXN0SWQiOiJ1cm46YWFpZDphZW06NWI0MDgxMmYifQ",
-                  "total": 42
+                  "cursor": "eyJsYXN0SWQiOiJ1cm46YWFpZDphZW06NWI0MDgxMmYifQ"
                 }
               }
             }
@@ -1188,6 +1186,17 @@
             "name": "x-correlation-id",
             "required": false,
             "description": "Correlation ID to group related requests"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": ["1"],
+              "example": "1"
+            },
+            "in": "header",
+            "name": "x-adobe-accept-experimental",
+            "required": true,
+            "description": "Required opt-in header for experimental API endpoints. Must be set to \"1\". Requests without this header will receive a 400 Bad Request response."
           }
         ],
         "responses": {
