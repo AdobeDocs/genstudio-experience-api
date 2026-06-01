@@ -3,7 +3,7 @@
   "info": {
     "title": "GenStudio API",
     "description": "API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences.\n\n**Experimental API**: These endpoints are experimental and require the `X-Adobe-Accept-Experimental: 1` header on every request. Requests without this header will receive a `400 Bad Request` response. This header signals that the consumer acknowledges the experimental nature of these APIs and that breaking changes may occur without prior notice. Note: this header requirement is temporary and will be removed once the API graduates to stable.",
-    "version": "20260601T180505Z",
+    "version": "20260601T183832Z",
     "license": {
       "name": "Adobe Proprietary",
       "url": "https://www.adobe.com/legal/terms.html"
@@ -34,6 +34,599 @@
           }
         },
         "required": ["value"],
+        "additionalProperties": false
+      },
+      "EmailExperience": {
+        "type": "object",
+        "properties": {
+          "experienceId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "title": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "string",
+            "enum": ["email"]
+          },
+          "externalTemplateSource": {
+            "type": "string"
+          },
+          "externalTemplateId": {
+            "type": "string"
+          },
+          "externalTemplateMetadata": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "externalAssetMetadata": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "brands": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": ["name"],
+              "additionalProperties": false
+            }
+          },
+          "personas": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": ["name"],
+              "additionalProperties": false
+            }
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": ["name"],
+              "additionalProperties": false
+            }
+          },
+          "campaigns": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": ["name"],
+              "additionalProperties": false
+            }
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "aspectRatio": {
+                  "type": "string"
+                },
+                "isMain": {
+                  "type": "boolean"
+                },
+                "asset": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "mimeType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["url"],
+                  "additionalProperties": false
+                },
+                "fields": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/FieldValue"
+                  }
+                },
+                "assets": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "fieldReference": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "mimeType": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["fieldReference"],
+                    "additionalProperties": false
+                  }
+                },
+                "sections": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "fields": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "$ref": "#/components/schemas/FieldValue"
+                        }
+                      },
+                      "assets": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "fieldReference": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string",
+                              "format": "uri"
+                            },
+                            "mimeType": {
+                              "type": "string"
+                            }
+                          },
+                          "required": ["fieldReference"],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": ["name", "fields"],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": ["isMain", "fields"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "experienceId",
+          "createdAt",
+          "modifiedAt",
+          "title",
+          "channel",
+          "keywords",
+          "brands",
+          "personas",
+          "products",
+          "campaigns",
+          "languages",
+          "variants"
+        ],
+        "additionalProperties": false
+      },
+      "DisplayExperience": {
+        "type": "object",
+        "properties": {
+          "experienceId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "title": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "string",
+            "enum": ["display"]
+          },
+          "externalTemplateSource": {
+            "type": "string"
+          },
+          "externalTemplateId": {
+            "type": "string"
+          },
+          "externalTemplateMetadata": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "externalAssetMetadata": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "brands": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": ["name"],
+              "additionalProperties": false
+            }
+          },
+          "personas": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": ["name"],
+              "additionalProperties": false
+            }
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": ["name"],
+              "additionalProperties": false
+            }
+          },
+          "campaigns": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": ["name"],
+              "additionalProperties": false
+            }
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "aspectRatio": {
+                  "type": "string"
+                },
+                "isMain": {
+                  "type": "boolean"
+                },
+                "asset": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "mimeType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["url"],
+                  "additionalProperties": false
+                },
+                "fields": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/FieldValue"
+                  }
+                },
+                "assets": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "fieldReference": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "mimeType": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["fieldReference"],
+                    "additionalProperties": false
+                  }
+                },
+                "sections": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "fields": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "$ref": "#/components/schemas/FieldValue"
+                        }
+                      },
+                      "assets": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "fieldReference": {
+                              "type": "string"
+                            },
+                            "url": {
+                              "type": "string",
+                              "format": "uri"
+                            },
+                            "mimeType": {
+                              "type": "string"
+                            }
+                          },
+                          "required": ["fieldReference"],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": ["name", "fields"],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": ["isMain", "fields"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "experienceId",
+          "createdAt",
+          "modifiedAt",
+          "title",
+          "channel",
+          "keywords",
+          "brands",
+          "personas",
+          "products",
+          "campaigns",
+          "languages",
+          "variants"
+        ],
+        "additionalProperties": false
+      },
+      "GenericExperience": {
+        "type": "object",
+        "properties": {
+          "experienceId": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "title": {
+            "type": "string"
+          },
+          "channel": {
+            "$ref": "#/components/schemas/Channel"
+          },
+          "externalTemplateSource": {
+            "type": "string"
+          },
+          "externalTemplateId": {
+            "type": "string"
+          },
+          "externalTemplateMetadata": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "externalAssetMetadata": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "brands": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": ["name"],
+              "additionalProperties": false
+            }
+          },
+          "personas": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": ["name"],
+              "additionalProperties": false
+            }
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": ["name"],
+              "additionalProperties": false
+            }
+          },
+          "campaigns": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": ["name"],
+              "additionalProperties": false
+            }
+          },
+          "languages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "aspectRatio": {
+                  "type": "string"
+                },
+                "isMain": {
+                  "type": "boolean"
+                },
+                "asset": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "mimeType": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["url"],
+                  "additionalProperties": false
+                },
+                "fields": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/FieldValue"
+                  }
+                },
+                "assets": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "fieldReference": {
+                        "type": "string"
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri"
+                      },
+                      "mimeType": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["fieldReference"],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": ["isMain", "fields"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "experienceId",
+          "createdAt",
+          "modifiedAt",
+          "title",
+          "channel",
+          "keywords",
+          "brands",
+          "personas",
+          "products",
+          "campaigns",
+          "languages",
+          "variants"
+        ],
         "additionalProperties": false
       },
       "Unauthorized": {
@@ -332,214 +925,17 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "experienceId": {
-                      "type": "string"
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/EmailExperience"
                     },
-                    "createdAt": {
-                      "type": "string",
-                      "format": "date-time"
+                    {
+                      "$ref": "#/components/schemas/DisplayExperience"
                     },
-                    "modifiedAt": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "channel": {
-                      "$ref": "#/components/schemas/Channel"
-                    },
-                    "externalTemplateSource": {
-                      "type": "string"
-                    },
-                    "externalTemplateId": {
-                      "type": "string"
-                    },
-                    "externalTemplateMetadata": {
-                      "type": "object",
-                      "additionalProperties": {}
-                    },
-                    "externalAssetMetadata": {
-                      "type": "object",
-                      "additionalProperties": {}
-                    },
-                    "keywords": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "brands": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "type": "string"
-                          }
-                        },
-                        "required": ["name"],
-                        "additionalProperties": false
-                      }
-                    },
-                    "personas": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "type": "string"
-                          }
-                        },
-                        "required": ["name"],
-                        "additionalProperties": false
-                      }
-                    },
-                    "products": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "type": "string"
-                          }
-                        },
-                        "required": ["name"],
-                        "additionalProperties": false
-                      }
-                    },
-                    "campaigns": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "type": "string"
-                          }
-                        },
-                        "required": ["name"],
-                        "additionalProperties": false
-                      }
-                    },
-                    "languages": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "variants": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "aspectRatio": {
-                            "type": "string"
-                          },
-                          "isMain": {
-                            "type": "boolean"
-                          },
-                          "asset": {
-                            "type": "object",
-                            "properties": {
-                              "url": {
-                                "type": "string",
-                                "format": "uri"
-                              },
-                              "mimeType": {
-                                "type": "string"
-                              }
-                            },
-                            "required": ["url"],
-                            "additionalProperties": false
-                          },
-                          "fields": {
-                            "type": "object",
-                            "additionalProperties": {
-                              "$ref": "#/components/schemas/FieldValue"
-                            }
-                          },
-                          "sections": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "name": {
-                                  "type": "string"
-                                },
-                                "fields": {
-                                  "type": "object",
-                                  "additionalProperties": {
-                                    "$ref": "#/components/schemas/FieldValue"
-                                  }
-                                },
-                                "assets": {
-                                  "type": "array",
-                                  "items": {
-                                    "type": "object",
-                                    "properties": {
-                                      "fieldReference": {
-                                        "type": "string"
-                                      },
-                                      "url": {
-                                        "type": "string",
-                                        "format": "uri"
-                                      },
-                                      "mimeType": {
-                                        "type": "string"
-                                      }
-                                    },
-                                    "required": ["fieldReference"],
-                                    "additionalProperties": false
-                                  }
-                                }
-                              },
-                              "required": ["name", "fields"],
-                              "additionalProperties": false
-                            }
-                          },
-                          "assets": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "fieldReference": {
-                                  "type": "string"
-                                },
-                                "url": {
-                                  "type": "string",
-                                  "format": "uri"
-                                },
-                                "mimeType": {
-                                  "type": "string"
-                                }
-                              },
-                              "required": ["fieldReference"],
-                              "additionalProperties": false
-                            }
-                          }
-                        },
-                        "required": ["isMain", "fields"],
-                        "additionalProperties": false
-                      }
+                    {
+                      "$ref": "#/components/schemas/GenericExperience"
                     }
-                  },
-                  "required": [
-                    "experienceId",
-                    "createdAt",
-                    "modifiedAt",
-                    "title",
-                    "channel",
-                    "keywords",
-                    "brands",
-                    "personas",
-                    "products",
-                    "campaigns",
-                    "languages",
-                    "variants"
                   ],
-                  "additionalProperties": false,
                   "description": "The full experience object"
                 },
                 "example": {
@@ -582,25 +978,6 @@
                           "value": "Shop Now"
                         }
                       },
-                      "sections": [
-                        {
-                          "name": "pod1",
-                          "fields": {
-                            "headline": {
-                              "value": "Pod 1 Title"
-                            },
-                            "body": {
-                              "value": "Pod 1 Body copy here"
-                            }
-                          },
-                          "assets": [
-                            {
-                              "fieldReference": "pod1_image",
-                              "url": "https://genstudio.adobe.io/experiences/urn:aaid:aem:e577c7e1-c119-4892-9b97-59a9ab1927f6/assets/urn:aaid:aem:62d4408b-13cb-4d41-8c6f-127fb2cad067"
-                            }
-                          ]
-                        }
-                      ],
                       "assets": []
                     },
                     {
@@ -1113,7 +1490,7 @@
       "get": {
         "operationId": "getExperienceAsset",
         "summary": "Get Experience Asset",
-        "description": "Returns a **302 redirect** to a short-lived pre-signed URL for the requested asset. The 302 is the expected success response — there is no 200 body.\n\nThe client's HTTP library follows the redirect automatically. Each call issues a fresh redirect with a new token.\n\n**Locating the `assetId`**: Use the asset `url` fields returned by `GET /experiences/:id`. Each URL ends with the `assetId` to pass here. The `assetId` must belong to the given `experienceId` — passing an asset from a different experience returns 404.\n\n**Accepted `assetId` formats**:\n- Asset URN: `urn:aaid:aem:62d4408b-13cb-4d41-8c6f-127fb2cad067`\n- Composite asset reference (org + account + URN): `36031A56669DEACD0A49402F@AdobeOrg;acct:aem-cmstg-p106653-e326705@adobe.com;urn:aaid:aem:f773c9cf-7bf1-4986-a4ac-7e9a6d209a1b`\n- Variant rendition name: `Variant_meta_1x1.chromeless.gsthumbnail.mp4`\n\n**Response headers on 302**: `Location` (signed URL, valid up to 60 minutes), `X-Asset-Mime-Type`, `Cache-Control: no-store`.\n\n**Rate limit**: 60 requests per minute per organization.",
+        "description": "Returns a **302 redirect** to a short-lived pre-signed URL for the requested asset. The 302 is the expected success response — there is no 200 body.\n\nThe client's HTTP library follows the redirect automatically. Each call issues a fresh redirect with a new token.\n\n**Locating the `assetId`**: Use the `url` field from asset objects returned by `GET /experiences/:id` — the path segment after `/assets/` is the `assetId`. Do not construct or guess `assetId` values; always use the URL provided in the response.\n\n**Response headers on 302**: `Location` (signed URL, valid up to 60 minutes), `X-Asset-Mime-Type`, `Cache-Control: no-store`.\n\n**Rate limit**: 60 requests per minute per organization.",
         "parameters": [
           {
             "schema": {
