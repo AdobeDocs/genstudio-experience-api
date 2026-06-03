@@ -3,7 +3,7 @@
   "info": {
     "title": "GenStudio API",
     "description": "API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences.\n\n**Experimental API**: These endpoints are experimental and require the `X-Adobe-Accept-Experimental: 1` header on every request. Requests without this header will receive a `400 Bad Request` response. This header signals that the consumer acknowledges the experimental nature of these APIs and that breaking changes may occur without prior notice. Note: this header requirement is temporary and will be removed once the API graduates to stable.",
-    "version": "20260603T230304Z",
+    "version": "20260603T230454Z",
     "license": {
       "name": "Adobe Proprietary",
       "url": "https://www.adobe.com/legal/terms.html"
@@ -1428,7 +1428,7 @@
       "get": {
         "operationId": "getExperienceAsset",
         "summary": "Get Experience Asset",
-        "description": "Returns a **302 redirect** to a short-lived pre-signed URL for the requested asset. The 302 is the expected success response — there is no 200 body.\n\nThe client's HTTP library follows the redirect automatically. Each call issues a fresh redirect with a new token.\n\n**Response headers on 302**: `Location` (signed URL, valid up to 60 minutes), `X-Asset-Mime-Type`, `Cache-Control: no-store`.\n\n**Rate limit**: 60 requests per minute per organization.",
+        "description": "Returns a **302 redirect** to a short-lived pre-signed URL for the requested asset. The 302 is the expected success response — there is no 200 body.\n\nThe client's HTTP library follows the redirect automatically. Each call issues a fresh redirect with a new token.\n\n**Prefer the `url` field**: Asset objects in `GET /experiences/:id` responses include a `url` field that already points to this endpoint. In most cases, follow that URL directly rather than constructing this endpoint from the `assetId` field. Use the `assetId` field only as a fallback when `url` is absent.\n\n**Response headers on 302**: `Location` (signed URL, valid up to 60 minutes), `X-Asset-Mime-Type`, `Cache-Control: no-store`.\n\n**Rate limit**: 60 requests per minute per organization.",
         "parameters": [
           {
             "schema": {
