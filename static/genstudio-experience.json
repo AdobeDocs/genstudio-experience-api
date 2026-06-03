@@ -3,7 +3,7 @@
   "info": {
     "title": "GenStudio API",
     "description": "API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences.\n\n**Experimental API**: These endpoints are experimental and require the `X-Adobe-Accept-Experimental: 1` header on every request. Requests without this header will receive a `400 Bad Request` response. This header signals that the consumer acknowledges the experimental nature of these APIs and that breaking changes may occur without prior notice. Note: this header requirement is temporary and will be removed once the API graduates to stable.",
-    "version": "20260601T183832Z",
+    "version": "20260603T163314Z",
     "license": {
       "name": "Adobe Proprietary",
       "url": "https://www.adobe.com/legal/terms.html"
@@ -11,6 +11,46 @@
   },
   "components": {
     "schemas": {
+      "AssetReference": {
+        "type": "object",
+        "properties": {
+          "assetId": {
+            "type": "string",
+            "description": "Raw composite asset identifier. Uniquely identifies the asset across GenStudio organizations. For assets that originate in a different GenStudio organization than the experience, use this value to look up or retrieve the asset directly."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Asset URL. For same-organization assets: proxied through this API — token-backed, always resolves to a presigned download URL. For cross-organization assets (typical for email and display channel experiences): a best-effort direct delivery URL with no embedded token. Works for publicly accessible assets; may return 401/403 for private ones — use assetId to retrieve those assets independently. Absent when the asset reference is a bare URN with no delivery host information."
+          },
+          "mimeType": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VariantAsset": {
+        "type": "object",
+        "properties": {
+          "assetId": {
+            "type": "string",
+            "description": "Raw composite asset identifier. Uniquely identifies the asset across GenStudio organizations. For assets that originate in a different GenStudio organization than the experience, use this value to look up or retrieve the asset directly."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Asset URL. For same-organization assets: proxied through this API — token-backed, always resolves to a presigned download URL. For cross-organization assets (typical for email and display channel experiences): a best-effort direct delivery URL with no embedded token. Works for publicly accessible assets; may return 401/403 for private ones — use assetId to retrieve those assets independently. Absent when the asset reference is a bare URN with no delivery host information."
+          },
+          "mimeType": {
+            "type": "string"
+          },
+          "fieldReference": {
+            "type": "string"
+          }
+        },
+        "required": ["fieldReference"],
+        "additionalProperties": false
+      },
       "Channel": {
         "type": "string",
         "enum": [
@@ -147,18 +187,7 @@
                   "type": "boolean"
                 },
                 "asset": {
-                  "type": "object",
-                  "properties": {
-                    "url": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "mimeType": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["url"],
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/AssetReference"
                 },
                 "fields": {
                   "type": "object",
@@ -169,21 +198,7 @@
                 "assets": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "fieldReference": {
-                        "type": "string"
-                      },
-                      "url": {
-                        "type": "string",
-                        "format": "uri"
-                      },
-                      "mimeType": {
-                        "type": "string"
-                      }
-                    },
-                    "required": ["fieldReference"],
-                    "additionalProperties": false
+                    "$ref": "#/components/schemas/VariantAsset"
                   }
                 },
                 "sections": {
@@ -203,21 +218,7 @@
                       "assets": {
                         "type": "array",
                         "items": {
-                          "type": "object",
-                          "properties": {
-                            "fieldReference": {
-                              "type": "string"
-                            },
-                            "url": {
-                              "type": "string",
-                              "format": "uri"
-                            },
-                            "mimeType": {
-                              "type": "string"
-                            }
-                          },
-                          "required": ["fieldReference"],
-                          "additionalProperties": false
+                          "$ref": "#/components/schemas/VariantAsset"
                         }
                       }
                     },
@@ -358,18 +359,7 @@
                   "type": "boolean"
                 },
                 "asset": {
-                  "type": "object",
-                  "properties": {
-                    "url": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "mimeType": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["url"],
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/AssetReference"
                 },
                 "fields": {
                   "type": "object",
@@ -380,21 +370,7 @@
                 "assets": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "fieldReference": {
-                        "type": "string"
-                      },
-                      "url": {
-                        "type": "string",
-                        "format": "uri"
-                      },
-                      "mimeType": {
-                        "type": "string"
-                      }
-                    },
-                    "required": ["fieldReference"],
-                    "additionalProperties": false
+                    "$ref": "#/components/schemas/VariantAsset"
                   }
                 },
                 "sections": {
@@ -414,21 +390,7 @@
                       "assets": {
                         "type": "array",
                         "items": {
-                          "type": "object",
-                          "properties": {
-                            "fieldReference": {
-                              "type": "string"
-                            },
-                            "url": {
-                              "type": "string",
-                              "format": "uri"
-                            },
-                            "mimeType": {
-                              "type": "string"
-                            }
-                          },
-                          "required": ["fieldReference"],
-                          "additionalProperties": false
+                          "$ref": "#/components/schemas/VariantAsset"
                         }
                       }
                     },
@@ -568,18 +530,7 @@
                   "type": "boolean"
                 },
                 "asset": {
-                  "type": "object",
-                  "properties": {
-                    "url": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "mimeType": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["url"],
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/AssetReference"
                 },
                 "fields": {
                   "type": "object",
@@ -590,21 +541,7 @@
                 "assets": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "fieldReference": {
-                        "type": "string"
-                      },
-                      "url": {
-                        "type": "string",
-                        "format": "uri"
-                      },
-                      "mimeType": {
-                        "type": "string"
-                      }
-                    },
-                    "required": ["fieldReference"],
-                    "additionalProperties": false
+                    "$ref": "#/components/schemas/VariantAsset"
                   }
                 }
               },
@@ -967,6 +904,7 @@
                       "aspectRatio": "4:5",
                       "isMain": true,
                       "asset": {
+                        "assetId": "urn:aaid:aem:e577c7e1-c119-4892-9b97-59a9ab1927f6",
                         "url": "https://genstudio.adobe.io/experiences/urn:aaid:aem:e577c7e1-c119-4892-9b97-59a9ab1927f6/assets/Variant_linkedin_4x5_0.chromeless.gsthumbnail.mp4",
                         "mimeType": "video/mp4"
                       },
