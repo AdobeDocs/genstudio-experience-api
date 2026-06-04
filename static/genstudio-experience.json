@@ -16,12 +16,12 @@
         "properties": {
           "assetId": {
             "type": "string",
-            "description": "Raw composite asset identifier. Uniquely identifies the asset across GenStudio organizations. For assets that originate in a different GenStudio organization than the experience, use this value to look up or retrieve the asset directly."
+            "description": "The raw composite asset identifier. Uniquely identifies the asset across GenStudio organizations. For assets that originate in a different GenStudio organization than the experience, use this value to look up or retrieve the asset directly."
           },
           "url": {
             "type": "string",
             "format": "uri",
-            "description": "Asset URL. For same-organization assets: proxied through this API — token-backed, always resolves to a presigned download URL. For cross-organization assets (typical for email and display channel experiences): a best-effort direct delivery URL with no embedded token. Works for publicly accessible assets; may return 401/403 for private ones — use assetId to retrieve those assets independently. Absent when the asset reference is a bare URN with no delivery host information."
+            "description": "The asset URL. For same-organization assets (proxied through this API and token-backed), this will be a pre-signed download URL. For cross-organization assets (typical for email and display channel experiences), this will be a best-effort direct delivery URL with no embedded token. For publicly accessible assets only. May return 401/403 for private assets; use assetId to retrieve those independently. Absent when the asset reference is a bare URN with no delivery host information."
           },
           "mimeType": {
             "type": "string"
@@ -39,7 +39,7 @@
           "url": {
             "type": "string",
             "format": "uri",
-            "description": "Asset URL. For same-organization assets: proxied through this API — token-backed, always resolves to a presigned download URL. For cross-organization assets (typical for email and display channel experiences): a best-effort direct delivery URL with no embedded token. Works for publicly accessible assets; may return 401/403 for private ones — use assetId to retrieve those assets independently. Absent when the asset reference is a bare URN with no delivery host information."
+            "description": "The asset URL. For same-organization assets (proxied through this API and token-backed), this will be a pre-signed download URL. For cross-organization assets (typical for email and display channel experiences), this will be a best-effort direct delivery URL with no embedded token. For publicly accessible assets only. May return 401/403 for private assets; use assetId to retrieve those independently. Absent when the asset reference is a bare URN with no delivery host information."
           },
           "mimeType": {
             "type": "string"
