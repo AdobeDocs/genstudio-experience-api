@@ -1439,7 +1439,7 @@
             "in": "path",
             "name": "experienceId",
             "required": true,
-            "description": "GenStudio experience URN."
+            "description": "A GenStudio Experience URN."
           },
           {
             "schema": {
@@ -1450,7 +1450,7 @@
             "in": "path",
             "name": "assetId",
             "required": true,
-            "description": "GenStudio asset URN"
+            "description": "A GenStudio asset URN."
           },
           {
             "schema": {
@@ -1460,7 +1460,7 @@
             "in": "header",
             "name": "authorization",
             "required": true,
-            "description": "Bearer token from Adobe OAuth Server-to-Server credentials"
+            "description": "Bearer token from Adobe OAuth Server-to-Server credentials."
           },
           {
             "schema": {
@@ -1470,7 +1470,7 @@
             "in": "header",
             "name": "x-api-key",
             "required": true,
-            "description": "Client ID from the Adobe Developer Console project"
+            "description": "Client ID from the Adobe Developer Console project."
           },
           {
             "schema": {
@@ -1480,7 +1480,7 @@
             "in": "header",
             "name": "x-ims-org-id",
             "required": true,
-            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console: open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID."
+            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console (open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID)."
           },
           {
             "schema": {
@@ -1490,7 +1490,7 @@
             "in": "header",
             "name": "x-request-id",
             "required": false,
-            "description": "Client-generated UUID for request tracing"
+            "description": "Client-generated UUID for request tracing."
           },
           {
             "schema": {
@@ -1500,7 +1500,7 @@
             "in": "header",
             "name": "x-correlation-id",
             "required": false,
-            "description": "Correlation ID to group related requests"
+            "description": "Correlation ID to group related requests."
           },
           {
             "schema": {
@@ -1516,21 +1516,21 @@
         ],
         "responses": {
           "302": {
-            "description": "Redirect to pre-signed asset delivery URL",
+            "description": "Redirect to pre-signed asset delivery URL.",
             "headers": {
               "Location": {
                 "schema": {
                   "type": "string",
                   "format": "uri"
                 },
-                "description": "Pre-signed URL for the asset; valid for up to 60 minutes",
+                "description": "A pre-signed URL for the asset. Valid for up to 60 minutes.",
                 "example": "https://delivery-p106653-e326705.adobeaemcloud.com/adobe/assets/e577c7e1-c119-4892-9b97-59a9ab1927f6/as/variant-4x5.png?token=eyJhbGci...&expiryTime=2026-02-23T11:30:00.000Z"
               },
               "X-Asset-Mime-Type": {
                 "schema": {
                   "type": "string"
                 },
-                "description": "MIME type of the asset at the redirect destination",
+                "description": "MIME type of the asset at the redirect destination.",
                 "example": "image/png"
               },
               "Cache-Control": {
@@ -1538,7 +1538,7 @@
                   "type": "string",
                   "enum": ["no-store"]
                 },
-                "description": "Always no-store — prevents proxy caching so each call issues a fresh signed URL",
+                "description": "Always no-store. This prevents proxy caching so each call issues a fresh signed URL.",
                 "example": "no-store"
               }
             }
