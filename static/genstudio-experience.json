@@ -3,7 +3,7 @@
   "info": {
     "title": "GenStudio API",
     "description": "API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences.\n\n**Experimental API**: These endpoints are experimental and require the `X-Adobe-Accept-Experimental: 1` header on every request. Requests without this header will receive a `400 Bad Request` response. This header signals that the consumer acknowledges the experimental nature of these APIs and that breaking changes may occur without prior notice. Note: this header requirement is temporary and will be removed once the API graduates to stable.",
-    "version": "20260601T183832Z",
+    "version": "20260604T191236Z",
     "license": {
       "name": "Adobe Proprietary",
       "url": "https://www.adobe.com/legal/terms.html"
@@ -11,6 +11,46 @@
   },
   "components": {
     "schemas": {
+      "AssetReference": {
+        "type": "object",
+        "properties": {
+          "assetId": {
+            "type": "string",
+            "description": "The raw composite asset identifier. Uniquely identifies the asset across GenStudio organizations. For assets that originate in a different GenStudio organization than the experience, use this value to look up or retrieve the asset directly."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "The asset URL. For same-organization assets (proxied through this API and token-backed), this will be a pre-signed download URL. For cross-organization assets (typical for email and display channel experiences), this will be a best-effort direct delivery URL with no embedded token. For publicly accessible assets only. May return 401/403 for private assets; use assetId to retrieve those independently. Absent when the asset reference is a bare URN with no delivery host information."
+          },
+          "mimeType": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VariantAsset": {
+        "type": "object",
+        "properties": {
+          "assetId": {
+            "type": "string",
+            "description": "The raw composite asset identifier. Uniquely identifies the asset across GenStudio organizations. For assets that originate in a different GenStudio organization than the experience, use this value to look up or retrieve the asset directly."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "The asset URL. For same-organization assets (proxied through this API and token-backed), this will be a pre-signed download URL. For cross-organization assets (typical for email and display channel experiences), this will be a best-effort direct delivery URL with no embedded token. For publicly accessible assets only. May return 401/403 for private assets; use assetId to retrieve those independently. Absent when the asset reference is a bare URN with no delivery host information."
+          },
+          "mimeType": {
+            "type": "string"
+          },
+          "fieldReference": {
+            "type": "string"
+          }
+        },
+        "required": ["fieldReference"],
+        "additionalProperties": false
+      },
       "Channel": {
         "type": "string",
         "enum": [
@@ -147,18 +187,7 @@
                   "type": "boolean"
                 },
                 "asset": {
-                  "type": "object",
-                  "properties": {
-                    "url": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "mimeType": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["url"],
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/AssetReference"
                 },
                 "fields": {
                   "type": "object",
@@ -169,21 +198,7 @@
                 "assets": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "fieldReference": {
-                        "type": "string"
-                      },
-                      "url": {
-                        "type": "string",
-                        "format": "uri"
-                      },
-                      "mimeType": {
-                        "type": "string"
-                      }
-                    },
-                    "required": ["fieldReference"],
-                    "additionalProperties": false
+                    "$ref": "#/components/schemas/VariantAsset"
                   }
                 },
                 "sections": {
@@ -203,21 +218,7 @@
                       "assets": {
                         "type": "array",
                         "items": {
-                          "type": "object",
-                          "properties": {
-                            "fieldReference": {
-                              "type": "string"
-                            },
-                            "url": {
-                              "type": "string",
-                              "format": "uri"
-                            },
-                            "mimeType": {
-                              "type": "string"
-                            }
-                          },
-                          "required": ["fieldReference"],
-                          "additionalProperties": false
+                          "$ref": "#/components/schemas/VariantAsset"
                         }
                       }
                     },
@@ -358,18 +359,7 @@
                   "type": "boolean"
                 },
                 "asset": {
-                  "type": "object",
-                  "properties": {
-                    "url": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "mimeType": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["url"],
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/AssetReference"
                 },
                 "fields": {
                   "type": "object",
@@ -380,21 +370,7 @@
                 "assets": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "fieldReference": {
-                        "type": "string"
-                      },
-                      "url": {
-                        "type": "string",
-                        "format": "uri"
-                      },
-                      "mimeType": {
-                        "type": "string"
-                      }
-                    },
-                    "required": ["fieldReference"],
-                    "additionalProperties": false
+                    "$ref": "#/components/schemas/VariantAsset"
                   }
                 },
                 "sections": {
@@ -414,21 +390,7 @@
                       "assets": {
                         "type": "array",
                         "items": {
-                          "type": "object",
-                          "properties": {
-                            "fieldReference": {
-                              "type": "string"
-                            },
-                            "url": {
-                              "type": "string",
-                              "format": "uri"
-                            },
-                            "mimeType": {
-                              "type": "string"
-                            }
-                          },
-                          "required": ["fieldReference"],
-                          "additionalProperties": false
+                          "$ref": "#/components/schemas/VariantAsset"
                         }
                       }
                     },
@@ -568,18 +530,7 @@
                   "type": "boolean"
                 },
                 "asset": {
-                  "type": "object",
-                  "properties": {
-                    "url": {
-                      "type": "string",
-                      "format": "uri"
-                    },
-                    "mimeType": {
-                      "type": "string"
-                    }
-                  },
-                  "required": ["url"],
-                  "additionalProperties": false
+                  "$ref": "#/components/schemas/AssetReference"
                 },
                 "fields": {
                   "type": "object",
@@ -590,21 +541,7 @@
                 "assets": {
                   "type": "array",
                   "items": {
-                    "type": "object",
-                    "properties": {
-                      "fieldReference": {
-                        "type": "string"
-                      },
-                      "url": {
-                        "type": "string",
-                        "format": "uri"
-                      },
-                      "mimeType": {
-                        "type": "string"
-                      }
-                    },
-                    "required": ["fieldReference"],
-                    "additionalProperties": false
+                    "$ref": "#/components/schemas/VariantAsset"
                   }
                 }
               },
@@ -855,7 +792,7 @@
             "in": "path",
             "name": "experienceId",
             "required": true,
-            "description": "GenStudio experience URN."
+            "description": "A GenStudio Experience URN."
           },
           {
             "schema": {
@@ -865,7 +802,7 @@
             "in": "header",
             "name": "authorization",
             "required": true,
-            "description": "Bearer token from Adobe OAuth Server-to-Server credentials"
+            "description": "Bearer token from Adobe OAuth Server-to-Server credentials."
           },
           {
             "schema": {
@@ -875,7 +812,7 @@
             "in": "header",
             "name": "x-api-key",
             "required": true,
-            "description": "Client ID from the Adobe Developer Console project"
+            "description": "Client ID from the Adobe Developer Console project."
           },
           {
             "schema": {
@@ -885,7 +822,7 @@
             "in": "header",
             "name": "x-ims-org-id",
             "required": true,
-            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console: open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID."
+            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console (open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID)."
           },
           {
             "schema": {
@@ -895,7 +832,7 @@
             "in": "header",
             "name": "x-request-id",
             "required": false,
-            "description": "Client-generated UUID for request tracing"
+            "description": "Client-generated UUID for request tracing."
           },
           {
             "schema": {
@@ -905,7 +842,7 @@
             "in": "header",
             "name": "x-correlation-id",
             "required": false,
-            "description": "Correlation ID to group related requests"
+            "description": "Correlation ID to group related requests."
           },
           {
             "schema": {
@@ -967,6 +904,7 @@
                       "aspectRatio": "4:5",
                       "isMain": true,
                       "asset": {
+                        "assetId": "urn:aaid:aem:e577c7e1-c119-4892-9b97-59a9ab1927f6",
                         "url": "https://genstudio.adobe.io/experiences/urn:aaid:aem:e577c7e1-c119-4892-9b97-59a9ab1927f6/assets/Variant_linkedin_4x5_0.chromeless.gsthumbnail.mp4",
                         "mimeType": "video/mp4"
                       },
@@ -1153,7 +1091,7 @@
             "in": "header",
             "name": "authorization",
             "required": true,
-            "description": "Bearer token from Adobe OAuth Server-to-Server credentials"
+            "description": "Bearer token from Adobe OAuth Server-to-Server credentials."
           },
           {
             "schema": {
@@ -1163,7 +1101,7 @@
             "in": "header",
             "name": "x-api-key",
             "required": true,
-            "description": "Client ID from the Adobe Developer Console project"
+            "description": "Client ID from the Adobe Developer Console project."
           },
           {
             "schema": {
@@ -1173,7 +1111,7 @@
             "in": "header",
             "name": "x-ims-org-id",
             "required": true,
-            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console: open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID."
+            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console (open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID)."
           },
           {
             "schema": {
@@ -1183,7 +1121,7 @@
             "in": "header",
             "name": "x-request-id",
             "required": false,
-            "description": "Client-generated UUID for request tracing"
+            "description": "Client-generated UUID for request tracing."
           },
           {
             "schema": {
@@ -1193,7 +1131,7 @@
             "in": "header",
             "name": "x-correlation-id",
             "required": false,
-            "description": "Correlation ID to group related requests"
+            "description": "Correlation ID to group related requests."
           },
           {
             "schema": {
@@ -1490,7 +1428,7 @@
       "get": {
         "operationId": "getExperienceAsset",
         "summary": "Get Experience Asset",
-        "description": "Returns a **302 redirect** to a short-lived pre-signed URL for the requested asset. The 302 is the expected success response — there is no 200 body.\n\nThe client's HTTP library follows the redirect automatically. Each call issues a fresh redirect with a new token.\n\n**Locating the `assetId`**: Use the `url` field from asset objects returned by `GET /experiences/:id` — the path segment after `/assets/` is the `assetId`. Do not construct or guess `assetId` values; always use the URL provided in the response.\n\n**Response headers on 302**: `Location` (signed URL, valid up to 60 minutes), `X-Asset-Mime-Type`, `Cache-Control: no-store`.\n\n**Rate limit**: 60 requests per minute per organization.",
+        "description": "Returns a **302 redirect** to a short-lived pre-signed URL for the requested asset. The 302 is the expected success response — there is no 200 body.\n\nThe client's HTTP library follows the redirect automatically. Each call issues a fresh redirect with a new token.\n\n**Prefer the `url` field**: Asset objects in `GET /experiences/:id` responses include a `url` field that already points to this endpoint. In most cases, follow that URL directly rather than constructing this endpoint from the `assetId` field. Use the `assetId` field only as a fallback when `url` is absent.\n\n**Response headers on 302**: `Location` (signed URL, valid up to 60 minutes), `X-Asset-Mime-Type`, `Cache-Control: no-store`.\n\nFor limits and usage notes, see the [Experience API Technical Usage Notes](https://developer.adobe.com/genstudio-api/getting-started/usage-notes/).",
         "parameters": [
           {
             "schema": {
@@ -1501,7 +1439,7 @@
             "in": "path",
             "name": "experienceId",
             "required": true,
-            "description": "GenStudio experience URN."
+            "description": "A GenStudio Experience URN."
           },
           {
             "schema": {
@@ -1512,7 +1450,7 @@
             "in": "path",
             "name": "assetId",
             "required": true,
-            "description": "GenStudio asset URN"
+            "description": "A GenStudio asset URN."
           },
           {
             "schema": {
@@ -1522,7 +1460,7 @@
             "in": "header",
             "name": "authorization",
             "required": true,
-            "description": "Bearer token from Adobe OAuth Server-to-Server credentials"
+            "description": "Bearer token from Adobe OAuth Server-to-Server credentials."
           },
           {
             "schema": {
@@ -1532,7 +1470,7 @@
             "in": "header",
             "name": "x-api-key",
             "required": true,
-            "description": "Client ID from the Adobe Developer Console project"
+            "description": "Client ID from the Adobe Developer Console project."
           },
           {
             "schema": {
@@ -1542,7 +1480,7 @@
             "in": "header",
             "name": "x-ims-org-id",
             "required": true,
-            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console: open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID."
+            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console (open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID)."
           },
           {
             "schema": {
@@ -1552,7 +1490,7 @@
             "in": "header",
             "name": "x-request-id",
             "required": false,
-            "description": "Client-generated UUID for request tracing"
+            "description": "Client-generated UUID for request tracing."
           },
           {
             "schema": {
@@ -1562,7 +1500,7 @@
             "in": "header",
             "name": "x-correlation-id",
             "required": false,
-            "description": "Correlation ID to group related requests"
+            "description": "Correlation ID to group related requests."
           },
           {
             "schema": {
@@ -1578,21 +1516,21 @@
         ],
         "responses": {
           "302": {
-            "description": "Redirect to pre-signed asset delivery URL",
+            "description": "Redirect to pre-signed asset delivery URL.",
             "headers": {
               "Location": {
                 "schema": {
                   "type": "string",
                   "format": "uri"
                 },
-                "description": "Pre-signed URL for the asset; valid for up to 60 minutes",
+                "description": "A pre-signed URL for the asset. Valid for up to 60 minutes.",
                 "example": "https://delivery-p106653-e326705.adobeaemcloud.com/adobe/assets/e577c7e1-c119-4892-9b97-59a9ab1927f6/as/variant-4x5.png?token=eyJhbGci...&expiryTime=2026-02-23T11:30:00.000Z"
               },
               "X-Asset-Mime-Type": {
                 "schema": {
                   "type": "string"
                 },
-                "description": "MIME type of the asset at the redirect destination",
+                "description": "MIME type of the asset at the redirect destination.",
                 "example": "image/png"
               },
               "Cache-Control": {
@@ -1600,7 +1538,7 @@
                   "type": "string",
                   "enum": ["no-store"]
                 },
-                "description": "Always no-store — prevents proxy caching so each call issues a fresh signed URL",
+                "description": "Always no-store. This prevents proxy caching so each call issues a fresh signed URL.",
                 "example": "no-store"
               }
             }
