@@ -3,7 +3,7 @@
   "info": {
     "title": "GenStudio API",
     "description": "API for Adobe GenStudio for Performance Marketing users to retrieve approved GenStudio experiences.\n\n**Experimental API**: These endpoints are experimental and require the `X-Adobe-Accept-Experimental: 1` header on every request. Requests without this header will receive a `400 Bad Request` response. This header signals that the consumer acknowledges the experimental nature of these APIs and that breaking changes may occur without prior notice. Note: this header requirement is temporary and will be removed once the API graduates to stable.",
-    "version": "20260603T230454Z",
+    "version": "20260604T191236Z",
     "license": {
       "name": "Adobe Proprietary",
       "url": "https://www.adobe.com/legal/terms.html"
@@ -34,7 +34,7 @@
         "properties": {
           "assetId": {
             "type": "string",
-            "description": "Raw composite asset identifier. Uniquely identifies the asset across GenStudio organizations. For assets that originate in a different GenStudio organization than the experience, use this value to look up or retrieve the asset directly."
+            "description": "The raw composite asset identifier. Uniquely identifies the asset across GenStudio organizations. For assets that originate in a different GenStudio organization than the experience, use this value to look up or retrieve the asset directly."
           },
           "url": {
             "type": "string",
@@ -792,7 +792,7 @@
             "in": "path",
             "name": "experienceId",
             "required": true,
-            "description": "GenStudio experience URN."
+            "description": "A GenStudio Experience URN."
           },
           {
             "schema": {
@@ -802,7 +802,7 @@
             "in": "header",
             "name": "authorization",
             "required": true,
-            "description": "Bearer token from Adobe OAuth Server-to-Server credentials"
+            "description": "Bearer token from Adobe OAuth Server-to-Server credentials."
           },
           {
             "schema": {
@@ -812,7 +812,7 @@
             "in": "header",
             "name": "x-api-key",
             "required": true,
-            "description": "Client ID from the Adobe Developer Console project"
+            "description": "Client ID from the Adobe Developer Console project."
           },
           {
             "schema": {
@@ -822,7 +822,7 @@
             "in": "header",
             "name": "x-ims-org-id",
             "required": true,
-            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console: open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID."
+            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console (open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID)."
           },
           {
             "schema": {
@@ -832,7 +832,7 @@
             "in": "header",
             "name": "x-request-id",
             "required": false,
-            "description": "Client-generated UUID for request tracing"
+            "description": "Client-generated UUID for request tracing."
           },
           {
             "schema": {
@@ -842,7 +842,7 @@
             "in": "header",
             "name": "x-correlation-id",
             "required": false,
-            "description": "Correlation ID to group related requests"
+            "description": "Correlation ID to group related requests."
           },
           {
             "schema": {
@@ -1091,7 +1091,7 @@
             "in": "header",
             "name": "authorization",
             "required": true,
-            "description": "Bearer token from Adobe OAuth Server-to-Server credentials"
+            "description": "Bearer token from Adobe OAuth Server-to-Server credentials."
           },
           {
             "schema": {
@@ -1101,7 +1101,7 @@
             "in": "header",
             "name": "x-api-key",
             "required": true,
-            "description": "Client ID from the Adobe Developer Console project"
+            "description": "Client ID from the Adobe Developer Console project."
           },
           {
             "schema": {
@@ -1111,7 +1111,7 @@
             "in": "header",
             "name": "x-ims-org-id",
             "required": true,
-            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console: open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID."
+            "description": "IMS Organization ID (format: {HEX}@AdobeOrg). Found in Adobe Developer Console (open your project, then Credentials → OAuth Server-to-Server → Credential Details → Organization ID)."
           },
           {
             "schema": {
@@ -1121,7 +1121,7 @@
             "in": "header",
             "name": "x-request-id",
             "required": false,
-            "description": "Client-generated UUID for request tracing"
+            "description": "Client-generated UUID for request tracing."
           },
           {
             "schema": {
@@ -1131,7 +1131,7 @@
             "in": "header",
             "name": "x-correlation-id",
             "required": false,
-            "description": "Correlation ID to group related requests"
+            "description": "Correlation ID to group related requests."
           },
           {
             "schema": {
